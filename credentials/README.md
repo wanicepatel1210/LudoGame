@@ -7,18 +7,27 @@
 
 # Blow is a list of items required. Missing items will causes points to be deducted from multiple milestone submissions.
 
-1. Server URL or IP
-2. SSH username
-3. SSH password or key.
-    <br> If a ssh key is used please upload the key to the credentials folder.
-4. Database URL or IP and port used.
-    <br><strong> NOTE THIS DOES NOT MEAN YOUR DATABASE NEEDS A PUBLIC FACING PORT.</strong> But knowing the IP and port number will help with SSH tunneling into the database. The default port is more than sufficient for this class.
-5. Database username
-6. Database password
-7. Database name (basically the name that contains all your tables)
-8. Instructions on how to use the above information.
+1.	Server URL: http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/
+2.	SSH username: ubuntu
+3.	SSH key: cs667key.pem
+4.	Database IP and port:127.0.0.1 | 3306
+5.	Database username: root
+6.	Database password: toor
+7.	Database name: cs667db
+8.  How to log into the server:
 
-# Most important things to Remember
-## These values need to kept update to date throughout the semester. <br>
-## <strong>Failure to do so will result it points be deducted from milestone submissions.</strong><br>
-## You may store the most of the above in this README.md file. DO NOT Store the SSH key or any keys in this README.md file.
+Using OSX/Linux:
+1.	Download server key "cs667key.pem"
+2.	Change into the directory where key is stored
+3.	Run command "sudo ssh -i "cs667key.pem" ubuntu@http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/
+
+Using Windows
+1.	Download Putty
+2.	Rebuild cs667key.pem to cs667key.ppk by PuTTYgen
+3.	Enter hostname as "http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/"
+4.	make sure the category you selected is SSH
+5.	Select generated "cs667key.ppk"
+6.	Click "Open"
+
+
+
