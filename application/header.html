@@ -5,7 +5,6 @@
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1">
    <link rel="stylesheet" href="css/header.css">
-   <script src="http://code.jquery.com/jquery-latest.min.js" type="text/javascript"></script>
    <link href="css/style.css" rel="stylesheet">
    <title>Header</title>
    <script
@@ -43,7 +42,7 @@
             </div>
             <button class="btn login-form__btn submit w-100">Sign In</button>
         </form>
-        <p class="mt-5 login-form__footer">Dont have account? <a href="#" onclick = "OpenSignupModal();" data-toggle="modal" data-target="#SignUpModal"" class="text-primary">Sign Up</a> now</p>
+        <p class="mt-5 login-form__footer">Dont have account? <a href="#" onclick = "HideLoginModal();" data-toggle="modal" data-target="#SignUpModal"" class="text-primary">Sign Up</a> now</p>
       </div>
       
     </div>
@@ -88,27 +87,31 @@
 <div id='cssmenu'>
 <ul class = "navMenu">
    <li id = "home" name="home"><a href='index.html'>Home</a></li>
-   <li id="leaderboard" name="leaderboard"><a href='leaderboard.html'>Leaderboard</a></li>
-   <li class='menu' name="howtoplay"><a href='#howtoplay'>How to Play</a></li>
-   <li name="contact"><a href='#contact'>Contact</a></li>
+   <li id = "leaderboard" name="leaderboard"><a href='leaderboard.html'>Leaderboard</a></li>
+   <li id = "rules" name="rules"><a href='rules.html'>How to Play</a></li>
+   <li id = "contact" name="contact"><a href='#contact'>Contact</a></li>
 </ul>
 </div>
 
 </body>
 <html>
+
 <script>
 $(document).ready(function() {
 $("#cssmenu ul li").removeClass('active');
 if(document.URL.indexOf('leaderboard') != -1) {
 	$("#leaderboard").addClass("active");
 }
-if(document.URL.indexOf('page-register') != -1) {
+else if(document.URL.indexOf('index') != -1) {
 	$("#home").addClass("active");
+}
+else if(document.URL.indexOf('rules') != -1) {
+	$("#rules").addClass("active");
 }
 
 });
-
-function OpenSignupModal()
+/* hide login popup */
+function HideLoginModal()
 {
 	$('#loginModal').hide();
 }
