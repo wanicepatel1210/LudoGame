@@ -1,0 +1,89 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+main {
+    font-family: Raleway;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+header {
+    font-size: x-large;
+    text-align: center;
+    font-weight: bold;
+    background-color: #546e7a;
+    color: #ffffff;
+}
+
+.pointTable {
+    display: grid;
+    grid-template-columns: auto auto;
+    height: 550px;
+    overflow: auto;
+}
+
+main {
+    display: grid;
+    grid-template-columns: auto auto;
+}
+
+.gridTiles {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    height: 550px;
+    overflow: auto;
+}
+
+#createGame, #leaderBoard {
+    /*border-style: solid;
+    border-width: thin;*/
+    margin-top: 2%;
+}
+
+#createGame {
+    float: right;
+    width: 59%;
+    margin-right: 5%;
+}
+
+#leaderBoard {
+    float: left;
+    width: 29%;
+    margin-left: 5%;
+}
+
+.entry {
+    border-style: solid;
+    border-width: thin;
+    padding: 1%;
+}
+
+.tiles{
+    border-radius: 2%;
+    box-shadow: 2px 2px 10px #bfbfbf;
+    padding: 5%;
+    margin: 5%;
+    background-color: #ffffff;
+}
+
+button {
+    border-style: none;
+    box-shadow: 1px 1px 5px #bfbfbf;
+    padding: 1% 5% 1% 5%;
+    background-color: #4CAF50;
+    color: #ffffff;
+    text-align: center;
+}
+
+.tiles > button {
+    border-radius: 10%;
+}
+
+b {
+    text-transform: uppercase;
+}
