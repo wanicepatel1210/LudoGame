@@ -10,7 +10,7 @@
 1.	Server URL: http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/
 2.	SSH username: ubuntu
 3.	SSH key: cs667key.pem
-4.	Database IP and port:127.0.0.1 | 3306
+4.	Database URL and port:ec2-18-191-136-71.us-east-2.compute.amazonaws.com | 3306
 5.	Database username: root
 6.	Database password: toor
 7.	Database name: cs667db
