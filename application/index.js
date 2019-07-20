@@ -8,7 +8,7 @@ const mysql = require('mysql');
 const port = process.env.PORT || 80;
 
 
-app.use(logger('dev'));
+
 app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));

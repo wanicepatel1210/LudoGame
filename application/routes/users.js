@@ -4,7 +4,7 @@
  */
 
 const express = require('express')
-const db = require('../config/db_conf.js');
+const db = require('../config/db_config.js');
 
 
 //create router
@@ -21,10 +21,29 @@ Object.prototype.isEmpty = function() {
 }
 
 //route for authentication
-router.get('/login', (req, res) => {
+router.post('/login', (req, res) => {
   console.log(req.body);
+  const email = req.body.email;
+  const password = req.body.password;
+  console.log("email : " + req.body.email + ' password : ' + req.body.password);
+  const queryString = "select * from USERS where email = ?";
 
-  res.status(200).json('success');
+  db.query(queryString, [email], (err, results) => {
+    if (err) {
+      return res.status(400).send({
+        err
+      });
+    } else {
+      const userDetail = results[0];
+      console.log("results : " + results[0]);
+      console.log("results : " + results[0].email + "&&" + results[0].password);
+      if (email == userDetail.email && password == userDetail.password) {
+        res.status(201).json('authenticated');
+      } else {
+        res.status(401).json('unauthenticated');
+      }
+    }
+  })
 })
 
 //route for register new user
@@ -32,14 +51,14 @@ router.post('/register', (req, res) => {
   console.log("INSIDE REGISTRATION:--");
   const queryString = "INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)"
 
-  db.query(queryString, [req.body.name, req.body.email, req.body.password], (err, results)=>{
-      if (err) {
-          return res.status(400).send({
-              err
-          });
-      } else {
-            res.status(200).json('success');
-      }
+  db.query(queryString, [req.body.name, req.body.email, req.body.password], (err, results) => {
+    if (err) {
+      return res.status(400).send({
+        err
+      });
+    } else {
+      res.status(200).json('success');
+    }
   })
 })
 
