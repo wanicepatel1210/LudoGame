@@ -1,23 +1,24 @@
-const express = require('express')
-var cors = require('cors')
-const app = express()
-const morgan = require('morgan')
+const express = require("express");
+const path = require('path');
+const app = express();
+const cors = require("cors");
+const bodyParser = require("body-parser");
+const logger = require("morgan");
+const mysql = require('mysql');
+const port = process.env.PORT || 80;
 
-const bodyParser = require('body-parser')
 
-app.use(cors())
+app.use(logger('dev'));
+app.use(cors());
 
-app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(bodyParser.json());
 
-//important.. this line creates a connection to use static files such as html saved in the
+//const usersRouter = require("./routes/users.js");
+//app.use("/users",usersRouter);
 
-app.use(express.static('./views'))
-app.use(morgan('short'))
+app.listen(port, function() {
+  console.log("Runnning on " + port);
+});
 
-app.get('/', (request, response) => {
-	response.sendFile('/views/index.html', { root: __dirname })
- })
-
- app.listen(80, () => {
-	 console.log("Server is up and listening on 80...")
- })
+module.exports = app;
