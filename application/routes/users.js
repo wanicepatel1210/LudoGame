@@ -5,6 +5,7 @@
 
 const express = require('express')
 const db = require('../config/db_config.js');
+var path = require('path');
 
 
 //create router
@@ -22,10 +23,8 @@ Object.prototype.isEmpty = function() {
 
 //route for authentication
 router.post('/login', (req, res) => {
-  console.log(req.body);
-  const email = req.body.email;
-  const password = req.body.password;
-  console.log("email : " + req.body.email + ' password : ' + req.body.password);
+  var email = req.body.email;
+  var password = req.body.password;
   const queryString = "select * from USERS where email = ?";
 
   db.query(queryString, [email], (err, results) => {
@@ -35,12 +34,12 @@ router.post('/login', (req, res) => {
       });
     } else {
       const userDetail = results[0];
-      console.log("results : " + results[0]);
-      console.log("results : " + results[0].email + "&&" + results[0].password);
-      if (email == userDetail.email && password == userDetail.password) {
-        res.status(201).json('authenticated');
+      if (!userDetail) {
+        res.status(401).end('unauthenticated');
+      } else if (email == userDetail.email && password == userDetail.password) {
+        res.status(200).json(userDetail).end();
       } else {
-        res.status(401).json('unauthenticated');
+        res.status(401).end('unauthenticated');
       }
     }
   })
@@ -49,17 +48,25 @@ router.post('/login', (req, res) => {
 //route for register new user
 router.post('/register', (req, res) => {
   console.log("INSIDE REGISTRATION:--");
-  const queryString = "INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)"
+  console.log('Name:' + req.body.Name);
+  const queryString = "INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)";
 
-  db.query(queryString, [req.body.name, req.body.email, req.body.password], (err, results) => {
-    if (err) {
-      return res.status(400).send({
-        err
-      });
-    } else {
-      res.status(200).json('success');
-    }
-  })
+  if (req.body.Password !== req.body.Password2) {
+    res.sendFile(path.resolve('views/leaderboard.html'));
+  } else {
+    db.query(queryString, [req.body.Name, req.body.Email, req.body.Password], (err, results) => {
+
+      if (err) {
+        return res.status(400).send({
+          err
+        });
+      } else {
+        res.sendFile(path.resolve('views/index.html'));
+        //res.status(200).json('success');
+      }
+    })
+  }
+
 })
 
 module.exports = router

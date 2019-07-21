@@ -16,6 +16,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: false
 }));
+
 //set public folder as static folder for static file
 //app.use('/assets',express.static(__dirname + '/public'));
 app.use(express.static('./views'));
@@ -27,7 +28,7 @@ const main = require('./routes/main.js')
 app.use(main);
 
 //create connection to user
-const user = require('./routes/user.js')
+const user = require('./routes/users.js')
 app.use(user);
 
 
