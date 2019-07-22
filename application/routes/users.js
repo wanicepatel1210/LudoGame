@@ -47,13 +47,10 @@ router.post('/login', (req, res) => {
 
 //route for register new user
 router.post('/register', (req, res) => {
-  console.log("INSIDE REGISTRATION:--");
-  console.log('Name:' + req.body.Name);
-  const queryString = "INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)";
+    console.log("INSIDE REGISTRATION:--");
+    console.log('Name:' + req.body.Name);
+    const queryString = "INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)";
 
-  if (req.body.Password !== req.body.Password2) {
-    res.sendFile(path.resolve('views/leaderboard.html'));
-  } else {
     db.query(queryString, [req.body.Name, req.body.Email, req.body.Password], (err, results) => {
 
       if (err) {
@@ -65,8 +62,6 @@ router.post('/register', (req, res) => {
         //res.status(200).json('success');
       }
     })
-  }
-
 })
 
 module.exports = router

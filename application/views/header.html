@@ -2,43 +2,55 @@
 <html lang=''>
 
 <head>
-  <meta charset='utf-8'>
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="stylesheet" href="css/header.css">
+      <meta charset='utf-8'>
+      <meta http-equiv="X-UA-Compatible" content="IE=edge">
+      <meta name="viewport" content="width=device-width, initial-scale=1">
+      <link rel="stylesheet" href="css/header.css">
 
-  <link href="css/style.css" rel="stylesheet">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <title>Header</title>
-  <script type = "text/javascript">
-    $(document).ready(function() {
-      $("#cssmenu ul li").removeClass('active');
-      if (document.URL.indexOf('leaderboard') != -1) {
-        $("#leaderboard").addClass("active");
-      } else if (document.URL.indexOf('index') != -1) {
-        $("#home").addClass("active");
-      } else if (document.URL.indexOf('rules') != -1) {
-        $("#rules").addClass("active");
+      <link href="css/style.css" rel="stylesheet">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+      <title>Header</title>
+      <script type = "text/javascript">
+
+      function check_pass() {
+          if (document.getElementById('Password').value == "") {
+              document.getElementById('register_submit').disabled = true;
+          }
+          else if (document.getElementById('Password').value == document.getElementById('Password2').value) {
+              document.getElementById('register_submit').disabled = false;
+          }
+          else {
+              document.getElementById('register_submit').disabled = true;
+          }
       }
-      $("#login_submit").click(function() {
-        var login = $.ajax({
-            url : '/login',
-            type: 'post',
-            data: {
-              'email' : $('#username').val(),
-              'password': $('#password').val()
-            },
-            success: function(response) {
-              $('#loginModal').hide();
-              $('.modal-backdrop').remove();
-              alert("Login Successful");
-            },
-            error: function(response) {
-              alert("Invalid credentials");
-            }
-        });
-      });
 
+      $(document).ready(function() {
+          $("#cssmenu ul li").removeClass('active');
+          if (document.URL.indexOf('leaderboard') != -1) {
+            $("#leaderboard").addClass("active");
+          } else if (document.URL.indexOf('index') != -1) {
+            $("#home").addClass("active");
+          } else if (document.URL.indexOf('rules') != -1) {
+            $("#rules").addClass("active");
+          }
+          $("#login_submit").click(function() {
+              var login = $.ajax({
+                  url : '/login',
+                  type: 'post',
+                  data: {
+                      'email' : $('#username').val(),
+                      'password': $('#password').val()
+                  },
+                  success: function(response) {
+                      $('#loginModal').hide();
+                      $('.modal-backdrop').remove();
+                      alert("Login Successful");
+                  },
+                  error: function(response) {
+                      alert("Invalid credentials");
+                  }
+              });
+          });
     });
     /* hide login popup */
     // function HideLoginModal() {
@@ -104,12 +116,12 @@
                 <input type="email" class="form-control" name="Email" placeholder="Email" required>
               </div>
               <div class="form-group">
-                <input type="password" class="form-control" name="Password" placeholder="Password" required>
+                <input type="password" class="form-control" id="Password" name = "Password" placeholder="Password" onkeyup='check_pass();' required/>
+                </div>
+			  <div class="form-group">
+                <input type="password" class="form-control" id="Password2"name = "Password2" placeholder="Re-type Password" onkeyup='check_pass();' required/>
               </div>
-              <div class="form-group">
-                <input type="password" class="form-control" name="Password2" placeholder="Re-type Password" required>
-              </div>
-              <button class="btn login-form__btn submit w-100" id="register_submit" type="submit">Register</button>
+              <button class="btn login-form__btn submit w-100" id="register_submit" type="submit" disabled>Register</button>
             </form>
           </div>
 
