@@ -4,7 +4,7 @@
  */
 
 const express = require('express')
-const db = require('../config/db.conf.js');
+const db = require('../config/db_config.js');
 var path = require('path');
 
 
