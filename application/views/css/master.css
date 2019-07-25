@@ -1,15 +1,32 @@
 @import url(http://fonts.googleapis.com/css?family=Raleway);
 
-main {
-    font-family: Raleway;
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box !important;
 }
-
 ::-webkit-scrollbar {
   width: 1px;
 }
 
 ::-webkit-scrollbar-thumb {
   background: #888;
+}
+
+body {
+    font-family: 'Raleway', sans-serif !important;
+}
+
+main {
+    display: flex !important;
+    width: 90%;
+    margin: auto;
+}
+
+button {
+        font-family: 'Raleway', sans-serif;
+        cursor: pointer;
+        border-style: none;
 }
 
 header {
@@ -20,14 +37,14 @@ header {
     color: #ffffff;
 }
 
-.pointTable {
-    display: grid;
-    grid-template-columns: auto auto;
-    height: 550px;
+#leaderBoard {
+    margin: 2% 1% 0% 0%;
+    flex: 2;
+    height: 75vh;
     overflow: auto;
 }
 
-main {
+.pointTable {
     display: grid;
     grid-template-columns: auto auto;
 }
@@ -35,32 +52,47 @@ main {
 .gridTiles {
     display: grid;
     grid-template-columns: auto auto auto;
-    height: 550px;
+    height: 55vh;
     overflow: auto;
-}
-
-#createGame, #leaderBoard {
-    /*border-style: solid;
-    border-width: thin;*/
-    margin-top: 2%;
-}
-
-#createGame {
-    float: right;
-    width: 59%;
-    margin-right: 5%;
-}
-
-#leaderBoard {
-    float: left;
-    width: 29%;
-    margin-left: 5%;
 }
 
 .entry {
     border-style: solid;
     border-width: thin;
     padding: 1%;
+}
+
+#createGame {
+    margin: 2% 0% 0% 1%;
+    flex: 5;
+    height: 75vh;
+}
+
+.host {
+    box-shadow: 1px 1px 5px #bfbfbf;
+    width: 50%;
+    margin: 0% 25% 1% 25%;
+    background-color: #4CAF50;
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+#createGame > p {
+    text-align: center;
+    font-weight: 400;
+    font-size: large;
+    margin-bottom: 0% !important;
+}
+
+#join {
+    width: 50%;
+    margin: auto;
+}
+
+header > p {
+    font-weight: normal;
+    font-size: small;
 }
 
 .tiles{
@@ -71,13 +103,11 @@ main {
     background-color: #ffffff;
 }
 
-button {
-    border-style: none;
+.join {
     box-shadow: 1px 1px 5px #bfbfbf;
     padding: 1% 5% 1% 5%;
     background-color: #4CAF50;
     color: #ffffff;
-    text-align: center;
 }
 
 .tiles > button {
