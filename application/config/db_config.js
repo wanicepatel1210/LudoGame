@@ -5,12 +5,13 @@ const db = mysql.createConnection({
     user: 'ludo',
     password: 'ludo867',
     database: 'cs667db',
+     port: '3306'
 });
 
 //check if database is connected
 db.connect((err)=> {
  	if (err) throw err;
- 	console.log('Connected');
+ 	console.log('DB Connected');
  });
 
 
