@@ -46,14 +46,14 @@ header {
     display: grid;
     grid-template-columns: auto auto;
     overflow: auto;
-    height: 74vh;
+    max-height: 72vh;
 }
 
 .gridTiles {
     display: grid;
     grid-template-columns: auto auto auto;
     overflow: auto;
-    height: 60vh;
+    max-height: 60vh;
 }
 
 .entry {

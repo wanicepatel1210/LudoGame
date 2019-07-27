@@ -31,17 +31,15 @@
                 <header>
                     Leader Board
                 </header>
-                <div class="pointTable" id="pointTable">
 
-                </div>
-                <!--
                 <div class="pointTable">
                     <div class="entry"><b>Name</b></div>
                     <div class="entry"><b>Points</b></div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
+                    {{#each data2}}
+                        <div class="entry">{{this.name}}</div>
+                        <div class="entry">{{this.rank}}</div>
+                    {{/each}}
                 </div>
-                -->
             </section>
             <section id="createGame">
                 <button type="button" name="button" class="host">Host a game</button>
@@ -50,24 +48,23 @@
                     Join a game
                     <p> Join a session from below games.</p>
                 </header>
-                <div class="gridTiles" id="gridTiles">
+
+                <div class="gridTiles">
+                    {{#each data1}}
+                        <section class="tiles">
+                            <p>CreatedBy <b>{{this.name}}</b></p>
+                            <p>{{this.number_of_players}} players joined</p>
+                            <button type="button" name="button" class="join">Join</button>
+                        </section>
+                    {{/each}}
 
                 </div>
-                <!--
-                <div class="gridTiles">
-                    <section class="tiles">
-                        <p>CreatedBy <b>Soham</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button" class="join">Join</button>
-                    </section>
-                </div>
-                -->
             </section>
         </main>
 
 
         <!-- Load our React component. -->
-        <script type="text/babel" src="js/homePage.js"></script>
-        <script type="text/babel" src="js/homePage1.js"></script>
+        <!--<script type="text/babel" src="js/homePage.js"></script>
+        <script type="text/babel" src="js/homePage1.js"></script>-->
     </body>
 </html>
