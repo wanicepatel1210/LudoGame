@@ -3,13 +3,6 @@
     <head>
         <meta charset="utf-8">
         <title>Home</title>
-
-        <!-- Load React. -->
-        <!-- Note: when deploying, replace "development.js" with "production.min.js". -->
-        <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
-        <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
-        <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
-
         <script
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -31,40 +24,28 @@
                 <header>
                     Leader Board
                 </header>
-
                 <div class="pointTable">
                     <div class="entry"><b>Name</b></div>
                     <div class="entry"><b>Points</b></div>
-                    {{#each data2}}
-                        <div class="entry">{{this.name}}</div>
-                        <div class="entry">{{this.rank}}</div>
+                    {{#each leaderBoard}}
+                        <div class="entry">{{name}}</div>
+                        <div class="entry">{{point}}</div>
                     {{/each}}
                 </div>
             </section>
             <section id="createGame">
                 <button type="button" name="button" class="host">Host a game</button>
                 <p>or</p>
-                <header id="join">
-                    Join a game
-                    <p> Join a session from below games.</p>
-                </header>
-
                 <div class="gridTiles">
-                    {{#each data1}}
+                    {{#each gameBoard}}
                         <section class="tiles">
-                            <p>CreatedBy <b>{{this.name}}</b></p>
-                            <p>{{this.number_of_players}} players joined</p>
+                            <p>CreatedBy <b>{{name}}</b></p>
+                            <p>{{number_of_players}} players joined</p>
                             <button type="button" name="button" class="join">Join</button>
                         </section>
                     {{/each}}
-
                 </div>
             </section>
         </main>
-
-
-        <!-- Load our React component. -->
-        <!--<script type="text/babel" src="js/homePage.js"></script>
-        <script type="text/babel" src="js/homePage1.js"></script>-->
     </body>
 </html>

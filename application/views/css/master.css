@@ -46,14 +46,7 @@ header {
     display: grid;
     grid-template-columns: auto auto;
     overflow: auto;
-    max-height: 72vh;
-}
-
-.gridTiles {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    overflow: auto;
-    max-height: 60vh;
+    max-height: 73vh;
 }
 
 .entry {
@@ -69,8 +62,8 @@ header {
 
 .host {
     box-shadow: 1px 1px 5px #bfbfbf;
-    width: 50%;
-    margin: 0% 25% 1% 25%;
+    width: 100%;
+    margin: 0%;
     background-color: #4CAF50;
     color: #ffffff;
     font-size: x-large;
@@ -84,14 +77,11 @@ header {
     margin-bottom: 0% !important;
 }
 
-#join {
-    width: 50%;
-    margin: auto;
-}
-
-header > p {
-    font-weight: normal;
-    font-size: small;
+.gridTiles {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    overflow: auto;
+    max-height: 70vh;
 }
 
 .tiles{
