@@ -218,7 +218,7 @@ wrap = function(content){
       "aspect-ratio": "xMidYMid",
       "transition-in": false,
       "min": 0,
-      "max": 1000,
+      "max": 25,
       "precision": 0,
       "padding": undefined
     };
