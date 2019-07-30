@@ -7,8 +7,7 @@
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous">
-        </script>
-        <script>
+
             $(function(){
                 $("#header").load("header.html");
             });
@@ -16,9 +15,7 @@
         <link rel="stylesheet" href="css/master.css">
     </head>
     <body>
-        <div id="header">
-
-        </div>
+        <div id="header"></div>
         <main>
             <section id="leaderBoard">
                 <header>
@@ -35,7 +32,6 @@
             </section>
             <section id="createGame">
                 <button type="button" name="button" class="host">Host a game</button>
-                <p>or</p>
                 <div class="gridTiles">
                     {{#each gameBoard}}
                         <section class="tiles">

@@ -14,7 +14,7 @@ const app = express();
 app.set('view engine', 'hbs');
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
-  extended: false
+    extended: false
 }));
 
 //set public folder as static folder for static file
@@ -23,15 +23,15 @@ app.use(express.static('./views'));
 app.use(express.static('public'));
 
 
-    //create connection to main
+//create connection to main
 const main = require('./routes/main.js')
 app.use(main);
 
 //create connection to user
-    const user = require('./routes/users.js')
+const user = require('./routes/users.js')
 app.use(user);
 
 
 app.listen(80, () => {
-  console.log("Server is up and listening on 80...")
+    console.log("Server is up and listening on 80...")
 })

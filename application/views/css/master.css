@@ -5,6 +5,7 @@
     padding: 0px;
     box-sizing: border-box !important;
 }
+
 ::-webkit-scrollbar {
   width: 1px;
 }
@@ -68,13 +69,6 @@ header {
     color: #ffffff;
     font-size: x-large;
     font-weight: bold;
-}
-
-#createGame > p {
-    text-align: center;
-    font-weight: 400;
-    font-size: large;
-    margin-bottom: 0% !important;
 }
 
 .gridTiles {
