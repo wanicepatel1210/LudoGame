@@ -26,7 +26,7 @@ router.post('/login', (req, res) => {
     db.query(queryString, [email], (err, results) => {
         if (err) {
             return res.status(400).send({
-                err;
+                err
             });
         }
         else {
@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
     db.query(queryString, [req.body.Name, req.body.Email, req.body.Password], (err, results) => {
         if (err) {
             return res.status(400).send({
-                err;
+                err
             });
         }
         else {
