@@ -3,10 +3,9 @@
  * this class will be used to handle get requests for issue
  */
 
-const express = require('express')
+const express = require('express');
 const db = require('../config/db_config.js');
 var path = require('path');
-
 
 //create router
 const router = express.Router();
@@ -14,18 +13,21 @@ const router = express.Router();
 var session = '';
 
 //Check for session
-router.get('/',(req,res) => {
-    console.log('--Inside check session--');
-    console.log('req.session : ' + req.session);
-    console.log('req.session.user : ' + req.session.user);
-    session = req.session;
-    if(session.user) {
-      console.log('working');
-        res.render('index', { session: session, name: 'soham' });
-    } else {
-      res.render('index');
-    }
-});
+// router.get('/', (req, res) => {
+//   console.log('--Inside check session--');
+//   console.log('req.session : ' + req.session);
+//   console.log('req.session.user : ' + req.session.user);
+//   session = req.session;
+//   if (session.user) {
+//     console.log('working');
+//     res.render('index', {
+//       session: session,
+//       name: 'soham'
+//     });
+//   } else {
+//     res.render('index');
+//   }
+// });
 
 
 //route for authentication
@@ -53,30 +55,28 @@ router.post('/login', (req, res) => {
   })
 })
 
-router.get('/logout', function(req, res){
-   req.session.destroy(function(){
-      console.log("user logged out.")
-   });
-   res.render('index');
- });
+router.get('/logout', function(req, res) {
+  req.session.destroy(function() {
+    console.log("user logged out.")
+  });
+  res.render('index');
+});
 
 //route for register new user
 router.post('/register', (req, res) => {
-    console.log("INSIDE REGISTRATION:--");
-    console.log('Name:' + req.body.Name);
-    const queryString = "INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)";
-
-    db.query(queryString, [req.body.Name, req.body.Email, req.body.Password], (err, results) => {
-
-      if (err) {
-        return res.status(400).send({
-          err
-        });
-      } else {
-        req.session.user = req.body.Email;
-        res.render('index', { 'session' : req.session });
-      }
-    })
+  const queryString = "INSERT INTO USERS (name, email, password) VALUES (?, ?, ?)";
+  db.query(queryString, [req.body.Name, req.body.Email, req.body.Password], (err, results) => {
+    if (err) {
+      return res.status(400).send({
+        err
+      });
+    } else {
+      req.session.user = req.body.Email;
+      res.render('index', {
+        'session': req.session
+      });
+    }
+  })
 })
 
-module.exports = router
+module.exports = router;

@@ -9,188 +9,38 @@
             crossorigin="anonymous">
         </script>
         <script>
-            $(document).ready(function(){
+            $(function(){
                 $("#header").load("header.html");
-                $("#footer").load("footer.html");
             });
         </script>
         <link rel="stylesheet" href="css/master.css">
     </head>
     <body>
+        <div id="header"></div>
         <main>
-            <div id="header">
-
-            </div>
             <section id="leaderBoard">
                 <header>
-                    Leader Board -- {{session.user}} -- {{name}}
+                    Leader Board --{{session.user}} -- {{name}}
                 </header>
                 <div class="pointTable">
                     <div class="entry"><b>Name</b></div>
                     <div class="entry"><b>Points</b></div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Harsham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Vishal</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Katthak</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Maithri</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Soham</div>
-                    <div class="entry">120</div>
-                    <div class="entry">Venish</div>
-                    <div class="entry">120</div>
+                    {{#each leaderBoard}}
+                        <div class="entry">{{name}}</div>
+                        <div class="entry">{{point}}</div>
+                    {{/each}}
                 </div>
             </section>
             <section id="createGame">
-                <header>
-                    Create Game
-                </header>
+                <button type="button" name="button" class="host">Host a game</button>
                 <div class="gridTiles">
-                    <section class="tiles">
-                        <p>CreatedBy <b>Soham</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Venish</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Katthak</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Maithri</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Soham</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Venish</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Katthak</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Maithri</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Soham</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Venish</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Katthak</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
-                    <section class="tiles">
-                        <p>CreatedBy <b>Maithri</b></p>
-                        <p>2 players joined</p>
-                        <button type="button" name="button">Join</button>
-                    </section>
+                    {{#each gameBoard}}
+                        <section class="tiles">
+                            <p>CreatedBy <b>{{name}}</b></p>
+                            <p>{{number_of_players}} players joined</p>
+                            <button type="button" name="button" class="join">Join</button>
+                        </section>
+                    {{/each}}
                 </div>
             </section>
         </main>
