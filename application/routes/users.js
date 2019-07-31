@@ -9,17 +9,24 @@ var path = require('path');
 
 
 //create router
-const router = express.Router()
+const router = express.Router();
 
+var session = '';
 
-//to check for empty object on error handling
-Object.prototype.isEmpty = function() {
-  for (var key in this) {
-    if (this.hasOwnProperty(key))
-      return false;
-  }
-  return true;
-}
+//Check for session
+router.get('/',(req,res) => {
+    console.log('--Inside check session--');
+    console.log('req.session : ' + req.session);
+    console.log('req.session.user : ' + req.session.user);
+    session = req.session;
+    if(session.user) {
+      console.log('working');
+        res.render('index', { session: session, name: 'soham' });
+    } else {
+      res.render('index');
+    }
+});
+
 
 //route for authentication
 router.post('/login', (req, res) => {
@@ -37,6 +44,7 @@ router.post('/login', (req, res) => {
       if (!userDetail) {
         res.status(401).end('unauthenticated');
       } else if (email == userDetail.email && password == userDetail.password) {
+        req.session.user = userDetail.email;
         res.status(200).json(userDetail).end();
       } else {
         res.status(401).end('unauthenticated');
@@ -44,6 +52,13 @@ router.post('/login', (req, res) => {
     }
   })
 })
+
+router.get('/logout', function(req, res){
+   req.session.destroy(function(){
+      console.log("user logged out.")
+   });
+   res.render('index');
+ });
 
 //route for register new user
 router.post('/register', (req, res) => {
@@ -58,8 +73,8 @@ router.post('/register', (req, res) => {
           err
         });
       } else {
-        res.sendFile(path.resolve('views/index.html'));
-        //res.status(200).json('success');
+        req.session.user = req.body.Email;
+        res.render('index', { 'session' : req.session });
       }
     })
 })

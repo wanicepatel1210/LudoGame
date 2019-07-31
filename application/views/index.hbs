@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Home</title>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+        </script>
+        <script>
+            $(document).ready(function(){
+                $("#header").load("header.html");
+                $("#footer").load("footer.html");
+            });
+        </script>
+        <link rel="stylesheet" href="css/master.css">
+    </head>
+    <body>
+        <main>
+            <div id="header">
+
+            </div>
+            <section id="leaderBoard">
+                <header>
+                    Leader Board -- {{session.user}} -- {{name}}
+                </header>
+                <div class="pointTable">
+                    <div class="entry"><b>Name</b></div>
+                    <div class="entry"><b>Points</b></div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Harsham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Vishal</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Katthak</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Maithri</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Soham</div>
+                    <div class="entry">120</div>
+                    <div class="entry">Venish</div>
+                    <div class="entry">120</div>
+                </div>
+            </section>
+            <section id="createGame">
+                <header>
+                    Create Game
+                </header>
+                <div class="gridTiles">
+                    <section class="tiles">
+                        <p>CreatedBy <b>Soham</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Venish</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Katthak</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Maithri</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Soham</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Venish</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Katthak</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Maithri</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Soham</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Venish</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Katthak</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                    <section class="tiles">
+                        <p>CreatedBy <b>Maithri</b></p>
+                        <p>2 players joined</p>
+                        <button type="button" name="button">Join</button>
+                    </section>
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
