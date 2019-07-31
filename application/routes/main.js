@@ -8,7 +8,7 @@ const db = require('../config/db_config.js');
 var path = require('path');
 const router = express.Router();
 
-router.get('/index', (req,res) => {
+router.get('/', (req,res) => {
     const sql = `SELECT USERS.name, BOARDS.number_of_players FROM BOARDS inner join USERS on BOARDS.organizer_id = USERS.id; CALL getLeaderboardData();`;
     db.query(sql, (err, result, fields)=> {
         if (err) throw err;
