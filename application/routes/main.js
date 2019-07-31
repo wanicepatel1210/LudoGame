@@ -11,12 +11,12 @@ var path = require('path');
 const router = express.Router();
 
 //route for authentication
-router.get('/', (req, res) => {
+router.get(['/','/index'], (req, res) => {
   console.log('--Inside check session--');
   console.log('req.session : ' + req.session);
   console.log('req.session.user : ' + req.session.user);
 
-  const sql = `SELECT USERS.name, BOARDS.number_of_players FROM BOARDS inner join USERS on BOARDS.organizer_id = USERS.id; CALL getLeaderboardData();`;
+  const sql = `SELECT USERS.name, BOARDS.id, BOARDS.number_of_players FROM BOARDS inner join USERS on BOARDS.organizer_id = USERS.id; CALL getLeaderboardData();`;
   db.query(sql, (err, result, fields) => {
     if (err) throw err;
     var gameBoard = result[0];
@@ -45,7 +45,7 @@ router.get('/rules', (req, res) => {
 //route for creating new board
 router.post('/create_board', (req, res) => {
   if (!req.session && !req.session.user) {
-    res.render('index');
+    res.status(200).json("NeedsLogin").end();
   }
   var user_id = req.body.user_id;
   var board_name = req.body.board_name;
@@ -86,6 +86,11 @@ router.post('/join_board', (req, res) => {
       res.status(200).json(results).end();
     }
   })
+});
+
+router.get('/gameBoard', (req, res) => {
+    console.log('Game Board');
+    res.sendFile(path.resolve('views/Ludo-game.html'));
 });
 
 module.exports = router

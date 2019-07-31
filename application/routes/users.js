@@ -12,23 +12,6 @@ const router = express.Router();
 
 var session = '';
 
-//Check for session
-// router.get('/', (req, res) => {
-//   console.log('--Inside check session--');
-//   console.log('req.session : ' + req.session);
-//   console.log('req.session.user : ' + req.session.user);
-//   session = req.session;
-//   if (session.user) {
-//     console.log('working');
-//     res.render('index', {
-//       session: session,
-//       name: 'soham'
-//     });
-//   } else {
-//     res.render('index');
-//   }
-// });
-
 
 //route for authentication
 router.post('/login', (req, res) => {
