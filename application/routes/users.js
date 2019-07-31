@@ -29,7 +29,7 @@ router.post('/login', (req, res) => {
       if (!userDetail) {
         res.status(401).end('unauthenticated');
       } else if (email == userDetail.email && password == userDetail.password) {
-        req.session.user = userDetail.email;
+        req.session.user = userDetail;
         res.status(200).json(userDetail).end();
       } else {
         res.status(401).end('unauthenticated');

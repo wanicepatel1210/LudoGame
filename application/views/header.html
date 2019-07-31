@@ -7,7 +7,10 @@
         <link rel="stylesheet" href="css/header.css">
 
         <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
         <title>Header</title>
         <script type = "text/javascript">
 
@@ -45,7 +48,10 @@
                     success: function(response) {
                         $('#loginModal').hide();
                         $('.modal-backdrop').remove();
-                        alert("Login Successful");
+                        if($('#hdnFlag').val())
+                        {
+                            window.location.href = "/Ludo-game.html";
+                        }
                     },
                     error: function(response) {
                         alert("Invalid credentials");
@@ -132,6 +138,6 @@
                 <li id="contact" name="contact"><a href='#contact'>Contact</a></li>
             </ul>
         </div>
-        <script src="plugins/common/common.min.js"></script>
+
     </body>
 <html>
