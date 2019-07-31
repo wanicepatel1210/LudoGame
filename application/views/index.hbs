@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Home</title>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+        </script>
+        <script>
+            $(function(){
+                $("#header").load("header.html");
+            });
+        </script>
+        <link rel="stylesheet" href="css/master.css">
+    </head>
+    <body>
+        <div id="header"></div>
+        <main>
+            <section id="leaderBoard">
+                <header>
+                    Leader Board
+                </header>
+                <div class="pointTable">
+                    <div class="entry"><b>Name</b></div>
+                    <div class="entry"><b>Points</b></div>
+                    {{#each leaderBoard}}
+                        <div class="entry">{{name}}</div>
+                        <div class="entry">{{point}}</div>
+                    {{/each}}
+                </div>
+            </section>
+            <section id="createGame">
+                <button type="button" name="button" class="host">Host a game</button>
+                <div class="gridTiles">
+                    {{#each gameBoard}}
+                        <section class="tiles">
+                            <p>CreatedBy <b>{{name}}</b></p>
+                            <p>{{number_of_players}} players joined</p>
+                            <button type="button" name="button" class="join">Join</button>
+                        </section>
+                    {{/each}}
+                </div>
+            </section>
+        </main>
+    </body>
+</html>

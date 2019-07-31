@@ -5,7 +5,8 @@ const db = mysql.createConnection({
     user: 'ludo',
     password: 'ludo867',
     database: 'cs667db',
-     port: '3306'
+    port: '3306',
+    multipleStatements: true
 });
 
 //check if database is connected
@@ -13,6 +14,5 @@ db.connect((err)=> {
  	if (err) throw err;
  	console.log('DB Connected');
  });
-
 
 module.exports = db;
