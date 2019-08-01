@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Home</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+        <script>
+            $(function(){
+                $("#header").load("header.html");
+            });
+        </script>
+        <link rel="stylesheet" href="css/master.css">
+    </head>
+    <body>
+        <div id="header"></div>
+        <!-- <div class="modal fade bs-example-modal-sm2">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Register to play Ludo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <form class="mt-5 mb-5 login-input">
+
+                    <div class="form-group">
+                      <div class="button-group">
+                        <div style="float:left;margin-top:8px;"><p>Number of Player:</p></div>
+                        <div class="btn-group " style="padding-left:4%;">
+                          <button type="button" class="btn btn-primary" style="margin-right:3%;">2</button>
+                          <button type="button" class="btn btn-primary" style="margin-right:3%;">3</button>
+                          <button type="button" class="btn btn-primary" >4</button>
+                        </div>
+                      </div>
+                    </div>
+                </form>
+              </div>
+              <div class="modal-footer">
+                <button class="btn login-form__btn submit w-100">Play</button>
+                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary">Save changes</button> -->
+              <!--</div>
+            </div><!-- /.modal-content -->
+          <!--</div><!-- /.modal-dialog -->
+        <!--</div><!-- /.modal -->
+
+
+        <main>
+            <section id="leaderBoard">
+                <header>
+                    Leader Board --{{session.user}} -- {{name}}
+                </header>
+                <div class="pointTable">
+                    <div class="entry"><b>Name</b></div>
+                    <div class="entry"><b>Points</b></div>
+                    {{#each leaderBoard}}
+                        <div class="entry">{{name}}</div>
+                        <div class="entry">{{point}}</div>
+                    {{/each}}
+                </div>
+            </section>
+            <section id="createGame">
+                <button type="button" name="button" onclick="createGame()" class="host">Host a game</button>
+                <div class="gridTiles">
+                    {{#each gameBoard}}
+                        <section class="tiles">
+                            <p>CreatedBy <b>{{name}}</b></p>
+                            <p>{{number_of_players}} players joined</p>
+                            <button type="button" name="button" id = "btnJoin" onclick="joinGame({{id}})" class="join">Join</button>
+                        </section>
+                    {{/each}}
+                </div>
+            </section>
+        </main>
+    </body>
+</html>
+<script>
+function joinGame(id)
+{
+    $.ajax({
+      url : '/join_board',
+      type: 'post',
+      data: {
+          'board_id' : id
+      },
+      success: function(response) {
+          window.location.href = "/Ludo-game.html";
+      },
+      error: function(response) {
+          alert("Error on joining game credentials");
+      }
+  });
+}
+function createGame()
+{
+  $.ajax({
+    url : '/create_board',
+    type: 'post',
+
+    success: function(response) {
+
+      if(response == "NeedsLogin")
+      {
+          debugger;
+          $('#loginModal').modal('show');
+          //alert("Needs Login");
+      }
+      else {
+        window.location.href = "/Ludo-game.html";
+      }
+
+    },
+    error: function(response) {
+        alert("Error on joining game credentials");
+    }
+});
+}
+</script>
