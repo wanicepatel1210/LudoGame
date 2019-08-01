@@ -24,7 +24,6 @@ router.get(['/','/index'], (req, res) => {
       leaderBoard: leaderBoard,
       gameBoard: gameBoard,
       session: req.session ? req.session : ''
-    });
   });
 });
 
