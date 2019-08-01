@@ -46,7 +46,8 @@ router.post('/create_board', (req, res) => {
   if (!req.session || !req.session.user) {
     return res.status(200).json("NeedsLogin").end();
   }
-  var user_id = req.session.user.user_id;
+  var user_id = req.session.user.id;
+  console.log('user_id:' + user_id)
   var board_name = 'test';//req.body.board_name;
   var move_time = 60;//req.body.move_time;
 
@@ -54,7 +55,7 @@ router.post('/create_board', (req, res) => {
 
   var start_end_time = new Date();
 
-  db.query(queryString, [board_name, start_end_time, start_end_time, 1, move_time, user_id, 'WAITING'], (err, results) => {
+  db.query(queryString, [board_name, start_end_time, start_end_time, 4, move_time, user_id, 'WAITING'], (err, results) => {
 
     if (err) {
       console.log("err : "+err)
@@ -74,11 +75,13 @@ router.post('/join_board', (req, res) => {
   var number_of_players = 3;//req.body.number_of_players;
   var status = number_of_players != 3 ? 'WAITING' : 'RUNNING';
   var board_id = req.body.board_id;
-  const queryString = "UPDATE BOARDS SET number_of_players = ?, game_status = ? where id = ?";
+  console.log('Board:' + board_id);
+  console.log('user:' + req.session.user.id);
+  const queryString = `Call JoinBoard(?, ?, ?, ?)`; //"UPDATE BOARDS SET number_of_players = ?, game_status = ? where id = ?";
 
   var start_end_time = new Date();
 
-  db.query(queryString, [number_of_players + 1, status, board_id], (err, results) => {
+  db.query(queryString, [number_of_players + 1, status, board_id,req.session.user.id], (err, results) => {
     if (err) {
       return res.status(400).send({
         err

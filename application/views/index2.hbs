@@ -7,14 +7,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <script>
             $(function(){
-                $("#header").load("header.hbs");
+                $("#header").load("header.html");
             });
         </script>
         <link rel="stylesheet" href="css/master.css">
     </head>
     <body>
         <div id="header"></div>
-        <input type="hidden" id="hdnFlag" value="false">
         <!-- <div class="modal fade bs-example-modal-sm2">
           <div class="modal-dialog">
             <div class="modal-content">
@@ -52,7 +51,7 @@
         <main>
             <section id="leaderBoard">
                 <header>
-                    Leader Board
+                    Leader Board --{{session.user}} -- {{name}}
                 </header>
                 <div class="pointTable">
                     <div class="entry"><b>Name</b></div>
@@ -79,8 +78,6 @@
     </body>
 </html>
 <script>
-
-<!-- Join game board -->
 function joinGame(id)
 {
     $.ajax({
@@ -95,9 +92,8 @@ function joinGame(id)
       error: function(response) {
           alert("Error on joining game credentials");
       }
-    });
+  });
 }
-<!-- Create game board -->
 function createGame()
 {
   $.ajax({
@@ -105,10 +101,12 @@ function createGame()
     type: 'post',
 
     success: function(response) {
+
       if(response == "NeedsLogin")
       {
-          $('#hdnFlag').val(true);
+          debugger;
           $('#loginModal').modal('show');
+          //alert("Needs Login");
       }
       else {
         window.location.href = "/Ludo-game.html";
@@ -118,6 +116,6 @@ function createGame()
     error: function(response) {
         alert("Error on joining game credentials");
     }
-  });
+});
 }
 </script>
