@@ -8,6 +8,11 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser');
 //use mysql database
 const mysql = require('mysql');
+//Use express-session for maintaining sessions
+const session = require('express-session');
+
+var cookieParser = require('cookie-parser');
+
 const app = express();
 
 //set view engine
@@ -16,6 +21,52 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
     extended: false
 }));
+
+//initialize sessions
+app.use(session({
+  key: 'user_sid',
+  secret: 'secret',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    maxAge: 60000
+  }
+}));
+
+// initialize cookie-parser to allow us access the cookies stored in the browser.
+app.use(cookieParser());
+
+
+// This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
+// This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
+// app.use((req, res, next) => {
+//   console.log('--inside middleware--');
+//   console.log('cookie : '+ req.cookies.user_sid);
+//   console.log('session : '+ req.session.user);
+//   if (req.cookies.user_sid && !req.session.user) {
+//     res.clearCookie('user_sid');
+//   }
+//   next();
+// });
+
+// // middleware function to check for logged-in users
+// var sessionChecker = (req, res, next) => {
+//   console.log('--inside middleware session checker--');
+//   console.log('cookie : '+ req.cookies.user_sid);
+//   console.log('session : '+ req.session.user);
+//   if (req.session.user && req.cookies.user_sid) {
+//     res.redirect('/index');
+//   } else {
+//     next();
+//   }
+// };
+//
+//
+// // route for Home-Page
+// app.get('/', sessionChecker, (req, res) => {
+//   console.log('--inside route for home page function--');
+//   res.redirect('/index');
+// });
 
 //set public folder as static folder for static file
 //app.use('/assets',express.static(__dirname + '/public'));
