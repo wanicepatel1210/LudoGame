@@ -15,21 +15,24 @@
         <script type = "text/javascript">
 
         function check_pass() {
-            if (document.getElementById('Password').value == "") {
+            if ((document.getElementById('Password').value == "") || (document.getElementById('Password2').value == "")) {
                 document.getElementById('register_submit').disabled = true;
+                document.getElementById('Password2').style.borderColor = "white";
             }
             else if (document.getElementById('Password').value == document.getElementById('Password2').value) {
                 document.getElementById('register_submit').disabled = false;
+                document.getElementById('Password2').style.borderColor = "white";
             }
             else {
                 document.getElementById('register_submit').disabled = true;
+                document.getElementById('Password2').style.borderColor = "red";
             }
         }
 
         $(document).ready(function() {
 
             $("#cssmenu ul li").removeClass('active');
-            if (document.URL.indexOf('leaderboard') != -1) {
+            if (document.URL.indexOf('leaderBoard') != -1) {
                 $("#leaderboard").addClass("active");
             }
             else if (document.URL.indexOf('index') != -1) {
@@ -52,19 +55,58 @@
 
                         // $('#loginModal1').text("Logout");
                         // $('#loginModal1').val("Logout");
-                        $('#profileName').text(response.name);
+                        $('#profileName').text(() => {
+                          return "Hi, " + response.name;
+                          });
+
                         if(response.name != "")
                         {
-                          $('#btnLogin').hide();
-                          $('#btnLogout').show();
+                          window.location.href = "/index"
                         }
                         if($('#hdnFlag').val() == 'true')
                         {
-                            window.location.href = "/Ludo-game.html";
+                          $.ajax({
+                            url : '/create_board',
+                            type: 'post',
+                            success: function(response) {
+                                window.location.href = "/gameBoard";
+                            },
+                            error: function(response) {
+                              alert("Error on joining game credentials");
+                            }
+                          });
+                        }
+                        else if($('#hdnJoinFlag').val() == 'true')
+                        {
+                          $.ajax({
+                            url : '/join_board',
+                            type: 'post',
+                            data: {
+                                'board_id' : $('#hdnJoinGameId').val()
+                            },
+                            success: function(response) {
+                                window.location.href = "/gameBoard";
+                            },
+                            error: function(response) {
+                                alert("Error on joining game credentials");
+                            }
+                          });
                         }
                     },
                     error: function(response) {
                         alert("Invalid credentials");
+                    }
+                });
+            });
+            $("#btnLogout").click(function() {
+                var login = $.ajax({
+                    url : '/logout',
+                    type: 'post',
+                    success: function(response) {
+                      window.location.href = "/index";
+                    },
+                    error: function(response) {
+                        alert("Error");
                     }
                 });
             });
@@ -76,17 +118,23 @@
         </script>
     </head>
     <body>
-        <div class="topnav">
-            <div style="text-align:center;">
-                <a><span class="logo">Ludo Game </span></a>
-                <a><span id="profileName"></span></a>
-                <a class="loginNav">
+      <header class="topnav">
+          <div style="display: flex;">
+              <div style="flex: 5;">
+                  <a style="float: right;" class="logo">Ludo Game</a>
+              </div>
+              <div style="flex: 3;">
+                  <a style="float: right; margin-top: 10px; font-size: large;" href="/profile" id="profileName"></a>
+              </div>
+              <div style="flex: 1;">
+                  <a style="flex: 1;" class="loginNav">
                   <button class="login" type="button" data-toggle="modal" data-target="#loginModal" id="btnLogin" value="Login">Login</button>
 
                   <button class="login" type="button" id="btnLogout" style="display:none;">Logout</button>
                 </a>
             </div>
         </div>
+        </header>
 
         <!-- Login Modal -->
         <div class=" modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -145,14 +193,14 @@
             </div>
         </div>
 
-        <div id='cssmenu'>
+        <nav id='cssmenu'>
             <ul class="navMenu">
                 <li id="home" name="home"><a href='/index'>Home</a></li>
-                <li id="leaderboard" name="leaderboard"><a href='/leaderboard'>Leaderboard</a></li>
+                <li id="leaderboard" name="leaderboard"><a href='/leaderBoard'>Leaderboard</a></li>
                 <li id="rules" name="rules"><a href='/rules'>How to Play</a></li>
-                <li id="contact" name="contact"><a href='#contact'>Contact</a></li>
+                <!-- <li id="contact" name="contact"><a href='#contact'>Contact</a></li> -->
             </ul>
-        </div>
+        </nav>
 
     </body>
 <html>

@@ -11,7 +11,7 @@ var path = require('path');
 const router = express.Router();
 
 //route for authentication
-router.get(['/','/index'], (req, res) => {
+router.get(['/', '/index'], (req, res) => {
   console.log('--Inside check session--');
   console.log('req.session : ' + req.session);
 
@@ -26,25 +26,18 @@ router.get(['/','/index'], (req, res) => {
       session: req.session ? req.session : ''
   });
 });
+});
 
-router.get('/leaderboard', (req, res) => {
-  res.sendFile(path.resolve('views/leaderboard.html'), {
-    'name': 'Soham'
-  });
-})
 
 router.get('/rules', (req, res) => {
+
   res.render('rules', {
-    name: 'Venish'
+     session: req.session ? req.session : ''
   });
-  //res.sendFile(path.resolve('views/rules.html'), {'name' : 'Harsham'});
 });
 
 //route for creating new board
 router.post('/create_board', (req, res) => {
-  if (!req.session || !req.session.user) {
-    return res.status(200).json("NeedsLogin").end();
-  }
   var user_id = req.session.user.id;
   console.log('user_id:' + user_id)
   var board_name = 'test';//req.body.board_name;
@@ -91,9 +84,26 @@ router.post('/join_board', (req, res) => {
   })
 });
 
-router.get('/gameBoard', (req, res) => {
-    console.log('Game Board');
-    res.sendFile(path.resolve('views/Ludo-game.html'));
+router.get('/leaderBoard', (req, res) => {
+  console.log('leader Board');
+  const sql = `CALL getLeaderboardDetails();`;
+  db.query(sql, (err, result, fields) => {
+    if (err) throw err;
+
+    var leaderBoard = result[0];
+    res.render('leaderboard', {
+      leaderBoard: leaderBoard,
+      session: req.session ? req.session : ''
+  });
 });
+});
+
+router.get('/gameBoard', (req, res) => {
+  console.log('Game Board');
+  res.render('Ludo-game', {
+     session: req.session ? req.session : ''
+  });
+});
+
 
 module.exports = router

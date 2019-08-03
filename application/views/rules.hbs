@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>How to play</title>
+        <title>Ludo Game - Rules</title>
         <script
             src="https://code.jquery.com/jquery-3.3.1.js"
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
@@ -10,14 +10,15 @@
         </script>
         <script>
             $(function(){
-                $("#header").load("header.html");
+                $("#header").load("header.hbs");
             });
         </script>
         <link rel="stylesheet" href="css/rules.css">
     </head>
     <body>
-        <main>
+
             <div id="header"></div>
+            <main>
             <section id="rules" class="section">
                 <header>
                     Rules
@@ -99,3 +100,21 @@
         </main>
     </body>
 </html>
+<script>
+$(document).ready(function() {
+  var loggedInId = '{{session.user.id}}';
+  var loggedInName = '{{session.user.name}}';
+  $("#header").load("header.hbs", function() {
+  if(loggedInId) {
+    $('#btnLogout').show();
+    $('#btnLogin').hide();
+    $('#profileName').text('Hi ' + loggedInName);
+  }
+  else {
+    $('#btnLogout').hide();
+    $('#btnLogin').show();
+    $('#profileName').text('');
+    }
+  });
+});
+</script>
