@@ -7,7 +7,7 @@ $(document).ready(function() {
               $('.profile-pic').attr('src', e.target.result);
           }
 
-          reader.readAsDataURL(input.files[0]);
+          reader.readAsDataURL(this.files[0]);
       }
     });
 

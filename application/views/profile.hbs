@@ -4,7 +4,7 @@
 	<meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <title>Welcome to Ludo game</title>
+    <title>Ludo Game - Profile</title>
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="css/loading-bar.css"/>
@@ -13,18 +13,17 @@
 	<script type="text/javascript" src="js/image-upload.js"></script>
 </head>
 <body>
-	<hr>
+	<div id="header"></div>
+
 	<div class="container target">
-		<div class="row">
-			<div class="col-sm-10">
-				<h1 class="" id="name">{{name}}</h1>
-				<button type="button" class="btn btn-success">Home</button>  <button type="button" class="btn btn-info">Log Out</button>
-				<br>
-			</div>
+		<div class="row" style="margin-top:15px;">
 			<div class="col-sm-2"><a class="pull-right circle"><img title="profile image" class="img-circle img-responsive profile-pic" height = "140" width = "140" src="http://www.rlsandbox.com/img/profile.jpg"></a>
 				<div class="p-image"><div class="glyphicon glyphicon-camera upload-button"></div>
 				<input class="file-upload" type="file" accept="image/*"/>
 				</div>
+			</div>
+			<div class="col-sm-10">
+
 			</div>
 		</div>
 		<br>
@@ -36,7 +35,7 @@
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Email</strong></span>{{email}}</li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Point</strong></span>{{point}}</li>
                 <li class="list-group-item text-right"><span class="pull-left"><strong class="">Time Played</strong></span>{{Total}}</li>
-				<li class="list-group-item text-right"><span class="pull-left"><strong class="">Win % </strong></span>
+				<li class="list-group-item text-right"><span class="pull-left"><strong class="">Win Percentage </strong></span>
 					<div class="progress" style="width: 70%;margin-left: 30%!important;margin-bottom:0px;" align="right">
 						<div class="progress-bar progress-bar-success progress-bar-striped active"  role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:{{win}}%">{{win}}%
 						</div>
@@ -99,3 +98,29 @@
 </div>
 </body>
 </html>
+<script>
+$(document).ready(function() {
+    var loggedInId = '{{session.user.id}}';
+    var loggedInName = '{{session.user.name}}';
+    $("#header").load("header.hbs", function() {
+    if(loggedInId) {
+    	$('#btnLogout').show();
+    	$('#btnLogin').hide();
+    	$('#profileName').text('Hi ' + loggedInName);
+    }
+		else {
+      $('#btnLogout').hide();
+      $('#btnLogin').show();
+      $('#profileName').text('');
+      }
+    });
+});
+
+$('#btnHome').click(function()
+{
+	window.location.href = "/index";
+});
+$('#btnSignout').click(function(){
+	window.location.href = "/logout"
+});
+</script>

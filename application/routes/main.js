@@ -28,14 +28,12 @@ router.get(['/', '/index'], (req, res) => {
 });
 });
 
-router.get('/leaderboard', (req, res) => {
-  res.sendFile(path.resolve('views/leaderboard.html'), {
-    'name': 'Soham'
-  });
-})
 
 router.get('/rules', (req, res) => {
-  res.render('rules');
+
+  res.render('rules', {
+     session: req.session ? req.session : ''
+  });
 });
 
 //route for creating new board
@@ -86,9 +84,26 @@ router.post('/join_board', (req, res) => {
   })
 });
 
-router.get('/gameBoard', (req, res) => {
-    console.log('Game Board');
-    res.sendFile(path.resolve('views/Ludo-game.html'));
+router.get('/leaderBoard', (req, res) => {
+  console.log('leader Board');
+  const sql = `CALL getLeaderboardDetails();`;
+  db.query(sql, (err, result, fields) => {
+    if (err) throw err;
+
+    var leaderBoard = result[0];
+    res.render('leaderboard', {
+      leaderBoard: leaderBoard,
+      session: req.session ? req.session : ''
+  });
 });
+});
+
+router.get('/gameBoard', (req, res) => {
+  console.log('Game Board');
+  res.render('Ludo-game', {
+     session: req.session ? req.session : ''
+  });
+});
+
 
 module.exports = router

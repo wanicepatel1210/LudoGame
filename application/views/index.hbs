@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>Home</title>
+        <title>Ludo Game - Home</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <script>
@@ -79,29 +79,28 @@
     </body>
 </html>
 <script>
-
+var loggedInId = '';
+var loggedInName = '';
 $(document).ready(function() {
-  $(function(){
-    var loggedInId = '{{session.user.id}}';
-    var loggedInName = '{{session.user.name}}';
-      $("#header").load("header.hbs", function() {
-        if(loggedInId) {
-            $('#btnLogout').show();
-            $('#btnLogin').hide();
-            $('#profileName').text(loggedInName);
-        } else {
-          $('#btnLogout').hide();
-          $('#btnLogin').show();
-          $('#profileName').text('');
-        }
-      });
+  loggedInId = '{{session.user.id}}';
+  loggedInName = '{{session.user.name}}';
+
+  $("#header").load("header.hbs", function() {
+  if(loggedInId) {
+    $('#btnLogout').show();
+    $('#btnLogin').hide();
+    $('#profileName').text('Hi ' + loggedInName);
+  }
+  else {
+    $('#btnLogout').hide();
+    $('#btnLogin').show();
+    $('#profileName').text('');
+    }
   });
 });
 <!-- Join game board -->
 function joinGame(id)
 {
-  var loggedInId = '{{session.user.id}}';
-  var loggedInName = '{{session.user.name}}';
   if(loggedInId)
   {
     $.ajax({
@@ -111,7 +110,7 @@ function joinGame(id)
           'board_id' : id
       },
       success: function(response) {
-          window.location.href = "/Ludo-game.html";
+          window.location.href = "/gameBoard";
       },
       error: function(response) {
           alert("Error on joining game credentials");
@@ -128,15 +127,13 @@ function joinGame(id)
 <!-- Create game board -->
 function createGame()
 {
-  var loggedInId = '{{session.user.id}}';
-  var loggedInName = '{{session.user.name}}';
   if(loggedInId)
   {
     $.ajax({
       url : '/create_board',
       type: 'post',
       success: function(response) {
-          window.location.href = "/Ludo-game.html";
+          window.location.href = "/gameBoard";
       },
       error: function(response) {
         alert("Error on joining game credentials");

@@ -61,7 +61,7 @@ router.post('/register', (req, res) => {
           if (err) throw err;
           var gameBoard = result[0];
           var leaderBoard = result[1];
-          leaderBoard.sort((a, b) => (a.point < b.point) ? 1 : (a.point === b.point) ? ((a.name < b.name) ? 1 : -1) : -1);
+          console.log('Register: ' + req.session);
           res.render('index',{leaderBoard: leaderBoard, gameBoard: gameBoard, session: req.session});
       });
     }
@@ -72,7 +72,7 @@ router.post('/register', (req, res) => {
 router.get('/profile', (req,res) => {
   //call to stored procedure
   const sql = `CALL getProfileData(?)`;
-  db.query(sql, req.query.id, (error, results) => {
+  db.query(sql, req.session.user.id, (error, results) => {
     if (error) {
       console.log("error0");
       return console.error("error");
@@ -88,7 +88,8 @@ router.get('/profile', (req,res) => {
         'rank_three': a[0].rank_three,
         'rank_four': a[0].rank_four,
         'win': Math.round((a[0].rank_one / a[0].Total_game) * 100),
-        'point': Point(a[0].rank_one, a[0].rank_two, a[0].rank_three, a[0].rank_four)
+        'point': Point(a[0].rank_one, a[0].rank_two, a[0].rank_three, a[0].rank_four),
+         session: req.session ? req.session : ''
       });
     }
   })

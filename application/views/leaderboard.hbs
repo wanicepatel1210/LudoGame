@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width,initial-scale=1">
-        <title>Quixlab - Bootstrap Admin Dashboard Template by Themefisher.com</title>
+        <title>Ludo Game - Leaderboard</title>
         <link rel="icon" type="image/png" sizes="16x16" href="images/favicon.png">
         <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
@@ -40,49 +40,16 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-        								<tr>
-                                            <td>1</td>
-                                            <td>Harsham Patel</td>
-                                            <td>500</td>
-                                            <td>5</td>
-                                            <td>100</td>
+                                      {{#each leaderBoard}}
+        								               <tr>
+                                            <td>{{@index}}</td>
+                                            <td>{{name}}</td>
+                                            <td>{{point}}</td>
+                                            <td>{{totalGame}}</td>
+                                            <td>-</td>
                                         </tr>
-        								<tr>
-                                            <td>2</td>
-                                            <td>Soham Prajapati</td>
-                                            <td>450</td>
-                                            <td>5</td>
-                                            <td>90</td>
-                                        </tr>
-        								<tr>
-                                            <td>3</td>
-                                            <td>Katthak Shah</td>
-                                            <td>400</td>
-                                            <td>5</td>
-                                            <td>80</td>
-                                        </tr>
-        								<tr>
-                                            <td>4</td>
-                                            <td>Vishal Sojitra</td>
-                                            <td>350</td>
-                                            <td>5</td>
-                                            <td>75</td>
-                                        </tr>
-        								<tr>
-                                            <td>5</td>
-                                            <td>Venish Patel</td>
-                                            <td>300</td>
-                                            <td>5</td>
-                                            <td>60</td>
-                                        </tr>
-        								<tr>
-                                            <td>6</td>
-                                            <td>Maithri</td>
-                                            <td>250</td>
-                                            <td>5</td>
-                                            <td>50</td>
-                                        </tr>
-                                    </tbody>
+                                      {{/each}}
+        								            </tbody>
                                 </table>
                             </div>
                         </div>
@@ -101,3 +68,21 @@
         <script src="./plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
     </body>
 </html>
+<script>
+$(document).ready(function() {
+  var loggedInId = '{{session.user.id}}';
+  var loggedInName = '{{session.user.name}}';
+  $("#header").load("header.hbs", function() {
+  if(loggedInId) {
+    $('#btnLogout').show();
+    $('#btnLogin').hide();
+    $('#profileName').text('Hi ' + loggedInName);
+  }
+  else {
+    $('#btnLogout').hide();
+    $('#btnLogin').show();
+    $('#profileName').text('');
+    }
+  });
+});
+</script>
