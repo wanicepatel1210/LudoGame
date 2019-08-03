@@ -13,127 +13,114 @@
 
         <title>Header</title>
         <script type = "text/javascript">
+            function check_pass() {
+                if ((document.getElementById('Password').value == "") || (document.getElementById('Password2').value == "")) {
+                    document.getElementById('register_submit').disabled = true;
+                    document.getElementById('Password2').style.borderColor = "white";
+                }
+                else if (document.getElementById('Password').value == document.getElementById('Password2').value) {
+                    document.getElementById('register_submit').disabled = false;
+                    document.getElementById('Password2').style.borderColor = "white";
+                }
+                else {
+                    document.getElementById('register_submit').disabled = true;
+                    document.getElementById('Password2').style.borderColor = "red";
+                }
+            }
 
-        function check_pass() {
-            if ((document.getElementById('Password').value == "") || (document.getElementById('Password2').value == "")) {
-                document.getElementById('register_submit').disabled = true;
-                document.getElementById('Password2').style.borderColor = "white";
-            }
-            else if (document.getElementById('Password').value == document.getElementById('Password2').value) {
-                document.getElementById('register_submit').disabled = false;
-                document.getElementById('Password2').style.borderColor = "white";
-            }
-            else {
-                document.getElementById('register_submit').disabled = true;
-                document.getElementById('Password2').style.borderColor = "red";
-            }
-        }
-
-        $(document).ready(function() {
-
-            $("#cssmenu ul li").removeClass('active');
-            if (document.URL.indexOf('leaderBoard') != -1) {
-                $("#leaderboard").addClass("active");
-            }
-            else if (document.URL.indexOf('index') != -1) {
-                $("#home").addClass("active");
-            }
-            else if (document.URL.indexOf('rules') != -1) {
-                $("#rules").addClass("active");
-            }
-            $("#login_submit").click(function() {
-                var login = $.ajax({
-                    url : '/login',
-                    type: 'post',
-                    data: {
-                        'email' : $('#username').val(),
-                        'password': $('#password').val()
-                    },
-                    success: function(response) {
-                        $('#loginModal').hide();
-                        $('.modal-backdrop').remove();
-
-                        // $('#loginModal1').text("Logout");
-                        // $('#loginModal1').val("Logout");
-                        $('#profileName').text(() => {
-                          return "Hi, " + response.name;
-                          });
-
-                        if(response.name != "")
-                        {
-                          window.location.href = "/index"
-                        }
-                        if($('#hdnFlag').val() == 'true')
-                        {
-                          $.ajax({
-                            url : '/create_board',
-                            type: 'post',
-                            success: function(response) {
-                                window.location.href = "/gameBoard";
-                            },
-                            error: function(response) {
-                              alert("Error on joining game credentials");
+            $(document).ready(function() {
+                $("#cssmenu ul li").removeClass('active');
+                if (document.URL.indexOf('leaderBoard') != -1) {
+                    $("#leaderboard").addClass("active");
+                }
+                else if (document.URL.indexOf('index') != -1) {
+                    $("#home").addClass("active");
+                }
+                else if (document.URL.indexOf('rules') != -1) {
+                    $("#rules").addClass("active");
+                }
+                $("#login_submit").click(function() {
+                    var login = $.ajax({
+                        url : '/login',
+                        type: 'post',
+                        data: {
+                            'email' : $('#username').val(),
+                            'password': $('#password').val()
+                        },
+                        success: function(response) {
+                            $('#loginModal').hide();
+                            $('.modal-backdrop').remove();
+                            $('#profileName').text(() => {
+                                return "Hi, " + response.name;
+                            });
+                            if(response.name != "") {
+                                window.location.href = "/index"
                             }
-                          });
-                        }
-                        else if($('#hdnJoinFlag').val() == 'true')
-                        {
-                          $.ajax({
-                            url : '/join_board',
-                            type: 'post',
-                            data: {
-                                'board_id' : $('#hdnJoinGameId').val()
-                            },
-                            success: function(response) {
-                                window.location.href = "/gameBoard";
-                            },
-                            error: function(response) {
-                                alert("Error on joining game credentials");
+                            if($('#hdnFlag').val() == 'true') {
+                                $.ajax({
+                                    url : '/create_board',
+                                    type: 'post',
+                                    success: function(response) {
+                                        window.location.href = "/gameBoard";
+                                    },
+                                    error: function(response) {
+                                        alert("Error on joining game credentials");
+                                    }
+                                });
                             }
-                          });
+                            else if($('#hdnJoinFlag').val() == 'true') {
+                                $.ajax({
+                                    url : '/join_board',
+                                    type: 'post',
+                                    data: {
+                                        'board_id' : $('#hdnJoinGameId').val()
+                                    },
+                                    success: function(response) {
+                                        window.location.href = "/gameBoard";
+                                    },
+                                    error: function(response) {
+                                        alert("Error on joining game credentials");
+                                    }
+                                });
+                            }
+                        },
+                        error: function(response) {
+                            alert("Invalid credentials");
                         }
-                    },
-                    error: function(response) {
-                        alert("Invalid credentials");
-                    }
+                    });
+                });
+                $("#btnLogout").click(function() {
+                    var login = $.ajax({
+                        url : '/logout',
+                        type: 'post',
+                        success: function(response) {
+                            window.location.href = "/index";
+                        },
+                        error: function(response) {
+                            alert("Error");
+                        }
+                    });
                 });
             });
-            $("#btnLogout").click(function() {
-                var login = $.ajax({
-                    url : '/logout',
-                    type: 'post',
-                    success: function(response) {
-                      window.location.href = "/index";
-                    },
-                    error: function(response) {
-                        alert("Error");
-                    }
-                });
-            });
-        });
-        /* hide login popup */
-        // function HideLoginModal() {
-        //   $('#loginModal').modal('hide');
-        // }
         </script>
     </head>
-    <body>
-      <header class="topnav">
-          <div style="display: flex;">
-              <div style="flex: 5;">
-                  <a style="float: right;" class="logo">Ludo Game</a>
-              </div>
-              <div style="flex: 3;">
-                  <a style="float: right; margin-top: 10px; font-size: large;" href="/profile" id="profileName"></a>
-              </div>
-              <div style="flex: 1;">
-                  <a style="flex: 1;" class="loginNav">
-                  <button class="login" type="button" data-toggle="modal" data-target="#loginModal" id="btnLogin" value="Login">Login</button>
 
-                  <button class="login" type="button" id="btnLogout" style="display:none;">Logout</button>
-                </a>
+    <body>
+        <header class="topnav">
+            <div style="display: flex;">
+                <div style="flex: 5;">
+                    <a style="float: right;" class="logo">Ludo Game</a>
+                </div>
+                <div style="flex: 3;">
+                    <a style="float: right; margin-top: 10px; font-size: large;" href="/profile" id="profileName"></a>
+                </div>
+                <div style="flex: 1;">
+                    <a style="flex: 1;" class="loginNav">
+                        <button class="login" type="button" data-toggle="modal" data-target="#loginModal" id="btnLogin" value="Login">Login</button>
+                        <button class="login" type="button" id="btnLogout" style="display:none;">Logout</button>
+                    </a>
+                </div>
             </div>
-        </div>
         </header>
 
         <!-- Login Modal -->
@@ -201,6 +188,5 @@
                 <!-- <li id="contact" name="contact"><a href='#contact'>Contact</a></li> -->
             </ul>
         </nav>
-
     </body>
 <html>
