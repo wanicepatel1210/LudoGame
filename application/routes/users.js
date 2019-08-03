@@ -39,7 +39,7 @@ router.post('/login', (req, res) => {
   })
 })
 
-router.get('/logout', function(req, res) {
+router.post('/logout', function(req, res) {
   req.session.destroy(function() {
     console.log("user logged out.")
   });
@@ -56,8 +56,13 @@ router.post('/register', (req, res) => {
       });
     } else {
       req.session.user = req.body.Email;
-      res.render('index', {
-        'session': req.session
+      const sql = `CALL getLeaderboardData();`;
+      db.query(sql, (err, result, fields)=> {
+          if (err) throw err;
+          var gameBoard = result[0];
+          var leaderBoard = result[1];
+          leaderBoard.sort((a, b) => (a.point < b.point) ? 1 : (a.point === b.point) ? ((a.name < b.name) ? 1 : -1) : -1);
+          res.render('index',{leaderBoard: leaderBoard, gameBoard: gameBoard, session: req.session});
       });
     }
   })
@@ -67,15 +72,26 @@ router.post('/register', (req, res) => {
 router.get('/profile', (req,res) => {
   //call to stored procedure
   const sql = `CALL getProfileData(?)`;
-  db.query(sql,req.query.id,(error, results)=>{
+  db.query(sql, req.query.id, (error, results) => {
     if (error) {
       console.log("error0");
-    return console.error("error");
-  }else{
-    var a= results[0];
-  res.render('profile',{'email':a[0].email,'name':a[0].name,'Total':SecondsTohhmmss(a[0].Total),'Total_game':a[0].Total_game,'rank_one':a[0].rank_one,'rank_two':a[0].rank_two,'rank_three':a[0].rank_three,'rank_four':a[0].rank_four,'win':Math.round((a[0].rank_one/a[0].Total_game)*100),'point':Point(a[0].rank_one,a[0].rank_two,a[0].rank_three,a[0].rank_four)});
-  }
-})
+      return console.error("error");
+    } else {
+      var a = results[0];
+      res.render('profile', {
+        'email': a[0].email,
+        'name': a[0].name,
+        'Total': SecondsTohhmmss(a[0].Total),
+        'Total_game': a[0].Total_game,
+        'rank_one': a[0].rank_one,
+        'rank_two': a[0].rank_two,
+        'rank_three': a[0].rank_three,
+        'rank_four': a[0].rank_four,
+        'win': Math.round((a[0].rank_one / a[0].Total_game) * 100),
+        'point': Point(a[0].rank_one, a[0].rank_two, a[0].rank_three, a[0].rank_four)
+      });
+    }
+  })
 })
 
 //Second to HH:MM:SS time format

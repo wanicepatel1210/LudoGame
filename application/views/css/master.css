@@ -30,7 +30,7 @@ button {
         border-style: none;
 }
 
-header {
+section > header {
     font-size: x-large;
     text-align: center;
     font-weight: bold;
@@ -99,4 +99,7 @@ header {
 
 b {
     text-transform: uppercase;
+}
+a {
+    cursor: pointer !important;
 }

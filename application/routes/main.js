@@ -11,7 +11,7 @@ var path = require('path');
 const router = express.Router();
 
 //route for authentication
-router.get(['/','/index'], (req, res) => {
+router.get(['/', '/index'], (req, res) => {
   console.log('--Inside check session--');
   console.log('req.session : ' + req.session);
 
@@ -26,6 +26,7 @@ router.get(['/','/index'], (req, res) => {
       session: req.session ? req.session : ''
   });
 });
+});
 
 router.get('/leaderboard', (req, res) => {
   res.sendFile(path.resolve('views/leaderboard.html'), {
@@ -34,17 +35,11 @@ router.get('/leaderboard', (req, res) => {
 })
 
 router.get('/rules', (req, res) => {
-  res.render('rules', {
-    name: 'Venish'
-  });
-  //res.sendFile(path.resolve('views/rules.html'), {'name' : 'Harsham'});
+  res.render('rules');
 });
 
 //route for creating new board
 router.post('/create_board', (req, res) => {
-  if (!req.session || !req.session.user) {
-    return res.status(200).json("NeedsLogin").end();
-  }
   var user_id = req.session.user.id;
   console.log('user_id:' + user_id)
   var board_name = 'test';//req.body.board_name;
