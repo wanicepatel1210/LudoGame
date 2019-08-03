@@ -228,6 +228,7 @@ function randomMove(Color, paw) {
                     if (onboard[currpawn] === 0) {
                         var doc = document.getElementById(currpawn);
                         var curr = Number(doc.style.left.replace(/[a-z]/g, ''));
+			/*
                         switch (Color) {
                             case "red":
                                 doc.style.left = 318 + 'px';
@@ -249,6 +250,29 @@ function randomMove(Color, paw) {
                                 doc.style.top = 226 + "px";
                                 break;
                         }
+			*/
+			 switch (Color) {
+                            case "red":
+                                doc.style.left = 424 + 'px';
+                                doc.style.top = 137 + "px";
+                                break;
+
+                            case "yellow":
+                                doc.style.left = 325 + 'px';
+                                doc.style.top = 632 + "px";
+                                break;
+
+                            case "blue":
+                                doc.style.left = 622 + 'px';
+                                doc.style.top = 435 + "px";
+                                break;
+
+                            case "green":
+                                doc.style.left = 128 + 'px';
+                                doc.style.top = 336 + "px";
+                                break;
+                        }
+
                         onboard[currpawn] = 1;
                     }
                     else {
