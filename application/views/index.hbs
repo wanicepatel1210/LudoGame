@@ -6,7 +6,69 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
         <script>
+            var loggedInId = '';
+            var loggedInName = '';
+            $(document).ready(function() {
+                loggedInId = '{{session.user.id}}';
+                loggedInName = '{{session.user.name}}';
 
+                $("#header").load("header.hbs", function() {
+                    if(loggedInId) {
+                        $('#btnLogout').show();
+                        $('#btnLogin').hide();
+                        $('#profileName').text('Hi ' + loggedInName);
+                    }
+                    else {
+                        $('#btnLogout').hide();
+                        $('#btnLogin').show();
+                        $('#profileName').text('');
+                    }
+                });
+            });
+
+            <!-- Join game board -->
+            function joinGame(id) {
+                if(loggedInId) {
+                    $.ajax({
+                        url : '/join_board',
+                        type: 'post',
+                        data: {
+                            'board_id' : id
+                        },
+                        success: function(response) {
+                            window.location.href = "/gameBoard";
+                        },
+                        error: function(response) {
+                            alert("Error on joining game credentials");
+                        }
+                    });
+                }
+                else {
+                    $('#hdnJoinFlag').val(true);
+                    $('#hdnJoinGameId').val(id);
+                    $('#loginModal').modal('show');
+                }
+            }
+
+            <!-- Create game board -->
+            function createGame() {
+                if(loggedInId) {
+                    $.ajax({
+                        url : '/create_board',
+                        type: 'post',
+                        success: function(response) {
+                            window.location.href = "/gameBoard";
+                        },
+                        error: function(response) {
+                            alert("Error on joining game credentials");
+                        }
+                    });
+                }
+                else {
+                    $('#hdnFlag').val(true);
+                    $('#loginModal').modal('show');
+                }
+            }
         </script>
         <link rel="stylesheet" href="css/master.css">
     </head>
@@ -78,71 +140,3 @@
         </main>
     </body>
 </html>
-<script>
-var loggedInId = '';
-var loggedInName = '';
-$(document).ready(function() {
-  loggedInId = '{{session.user.id}}';
-  loggedInName = '{{session.user.name}}';
-
-  $("#header").load("header.hbs", function() {
-  if(loggedInId) {
-    $('#btnLogout').show();
-    $('#btnLogin').hide();
-    $('#profileName').text('Hi ' + loggedInName);
-  }
-  else {
-    $('#btnLogout').hide();
-    $('#btnLogin').show();
-    $('#profileName').text('');
-    }
-  });
-});
-<!-- Join game board -->
-function joinGame(id)
-{
-  if(loggedInId)
-  {
-    $.ajax({
-      url : '/join_board',
-      type: 'post',
-      data: {
-          'board_id' : id
-      },
-      success: function(response) {
-          window.location.href = "/gameBoard";
-      },
-      error: function(response) {
-          alert("Error on joining game credentials");
-      }
-    });
-  }
-  else {
-    $('#hdnJoinFlag').val(true);
-    $('#hdnJoinGameId').val(id);
-    $('#loginModal').modal('show');
-  }
-
-}
-<!-- Create game board -->
-function createGame()
-{
-  if(loggedInId)
-  {
-    $.ajax({
-      url : '/create_board',
-      type: 'post',
-      success: function(response) {
-          window.location.href = "/gameBoard";
-      },
-      error: function(response) {
-        alert("Error on joining game credentials");
-      }
-    });
-  }
-  else {
-    $('#hdnFlag').val(true);
-    $('#loginModal').modal('show');
-  }
-}
-</script>

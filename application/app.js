@@ -24,18 +24,17 @@ app.use(bodyParser.urlencoded({
 
 //initialize sessions
 app.use(session({
-  key: 'user_sid',
-  secret: 'secret',
-  resave: false,
-  saveUninitialized: false,
-  cookie: {
+    key: 'user_sid',
+    secret: 'secret',
+    resave: false,
+    saveUninitialized: false,
+    cookie: {
     maxAge: 60000000
-  }
+    }
 }));
 
 // initialize cookie-parser to allow us access the cookies stored in the browser.
 app.use(cookieParser());
-
 
 // This middleware will check if user's cookie is still saved in browser and user is not set, then automatically log the user out.
 // This usually happens when you stop your express server after login, your cookie still remains saved in the browser.
@@ -73,7 +72,6 @@ app.use(cookieParser());
 app.use(express.static('./views'));
 app.use(express.static('public'));
 
-
 //create connection to main
 const main = require('./routes/main.js')
 app.use(main);
@@ -81,7 +79,6 @@ app.use(main);
 //create connection to user
 const user = require('./routes/users.js')
 app.use(user);
-
 
 app.listen(80, () => {
     console.log("Server is up and listening on 80...")

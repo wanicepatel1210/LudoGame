@@ -12,6 +12,22 @@
             $(function(){
                 $("#header").load("header.hbs");
             });
+            $(document).ready(function() {
+                var loggedInId = '{{session.user.id}}';
+                var loggedInName = '{{session.user.name}}';
+                $("#header").load("header.hbs", function() {
+                    if(loggedInId) {
+                        $('#btnLogout').show();
+                        $('#btnLogin').hide();
+                        $('#profileName').text('Hi ' + loggedInName);
+                    }
+                    else {
+                        $('#btnLogout').hide();
+                        $('#btnLogin').show();
+                        $('#profileName').text('');
+                    }
+                });
+            });
         </script>
         <link rel="stylesheet" href="css/rules.css">
     </head>
@@ -47,7 +63,9 @@
                             Your browser does not support the video tag.
                         </video>
                         <article class="description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            2 to 4 players begin by throwing the die. Players take turns in clockwise order; highest throw of the die will start.
+                            Each player needs to throw the die and he/she must roll a six in order to move a piece out of the base and onto the starting sequence.
+                            Now, that piece is then in play and it can be moved according to the rolling of die.
                         </article>
                     </div>
                     <div class="tile">
@@ -56,7 +74,8 @@
                             Your browser does not support the video tag.
                         </video>
                         <article class="description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            If a six is rolled, the player can choose to either move a piece out of his base onto the starting square or move a piece that is in play.
+                            Anytime a six is rolled, a player gets chance to roll the die again.
                         </article>
                     </div>
                     <div class="tile">
@@ -65,7 +84,9 @@
                             Your browser does not support the video tag.
                         </video>
                         <article class="description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            If a player rolls a six for three times in a row, then he loses his turn and next player gets his turn.
+                            While moving piece, if a player’s piece lands on an opponent’s piece,
+                            the opponent’s piece is sent back to its base where he must roll six again in order to move out from base to starting sequence.
                         </article>
                     </div>
                     <div class="tile">
@@ -74,7 +95,8 @@
                             Your browser does not support the video tag.
                         </video>
                         <article class="description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            If a player lands on a place occupied by one of his own pieces, that space becomes blocked.
+                            A blocked space cannot be passed or landed on by an opponent’s piece.
                         </article>
                     </div>
                     <div class="tile">
@@ -83,16 +105,10 @@
                             Your browser does not support the video tag.
                         </video>
                         <article class="description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-                        </article>
-                    </div>
-                    <div class="tile">
-                        <video width="45%" controls class="video">
-                            <source src="video/hello.mp4" type="video/mp4">
-                            Your browser does not support the video tag.
-                        </video>
-                        <article class="description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
+                            When a player’s piece reached to the home column of its own color then it continues to move towards its home triangle.
+                            It can reach to the home triangle only with an exact roll of the die.
+                            In order to win the game, a first player needs to have his all four pieces inside home triangle.
+                            The remaining players will continue the game to determine the runner-ups.
                         </article>
                     </div>
                 </div>
@@ -100,21 +116,3 @@
         </main>
     </body>
 </html>
-<script>
-$(document).ready(function() {
-  var loggedInId = '{{session.user.id}}';
-  var loggedInName = '{{session.user.name}}';
-  $("#header").load("header.hbs", function() {
-  if(loggedInId) {
-    $('#btnLogout').show();
-    $('#btnLogin').hide();
-    $('#profileName').text('Hi ' + loggedInName);
-  }
-  else {
-    $('#btnLogout').hide();
-    $('#btnLogin').show();
-    $('#profileName').text('');
-    }
-  });
-});
-</script>
