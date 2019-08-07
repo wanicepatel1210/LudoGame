@@ -28,7 +28,7 @@ function Stuck() {
     if (onboard[currpawn] == 0||currPos+num>44) {
         if (DontHaveOtherFree()||currPos+num>44) {
             var badtext = document.getElementById('badtext');
-            badtext.innerText = "you're stuck, you can't move";
+            badtext.innerText = "You're stuck, you can't move";
             clicked = false;
             var dice = document.getElementById('dice');
             dice.style.backgroundImage = "url(Images/dice.gif)";
@@ -191,22 +191,25 @@ function ResetPawn(victim) {
     positions[victim] = 0;
     var pawnToMove = document.getElementById(victim);
     switch (victim) {
-        case "redpawn1": pawnToMove.style.top = 149 + "px"; pawnToMove.style.left = 442 + "px"; break;
-        case "redpawn2": pawnToMove.style.top = 102 + "px"; pawnToMove.style.left = 395 + "px"; break;
-        case "redpawn3": pawnToMove.style.top = 55 + "px"; pawnToMove.style.left = 442 + "px"; break;
-        case "redpawn4": pawnToMove.style.top = 102 + "px"; pawnToMove.style.left = 490 + "px"; break;
-        case "bluepawn1": pawnToMove.style.top = 451 + "px"; pawnToMove.style.left = 490 + "px"; break;
-        case "bluepawn2": pawnToMove.style.top = 451 + "px"; pawnToMove.style.left = 395 + "px"; break;
-        case "bluepawn3": pawnToMove.style.top = 404 + "px"; pawnToMove.style.left = 442 + "px"; break;
-        case "bluepawn4": pawnToMove.style.top = 498 + "px"; pawnToMove.style.left = 442 + "px"; break;
-        case "greenpawn1": pawnToMove.style.top = 149 + "px"; pawnToMove.style.left = 93 + "px"; break;
-        case "greenpawn2": pawnToMove.style.top = 102 + "px"; pawnToMove.style.left = 140 + "px"; break;
-        case "greenpawn3": pawnToMove.style.top = 55 + "px"; pawnToMove.style.left = 93 + "px"; break;
-        case "greenpawn4": pawnToMove.style.top = 102 + "px"; pawnToMove.style.left = 47 + "px"; break;
-        case "yellowpawn1": pawnToMove.style.top = 451 + "px"; pawnToMove.style.left = 47 + "px"; break;
-        case "yellowpawn2": pawnToMove.style.top = 451 + "px"; pawnToMove.style.left = 140 + "px"; break;
-        case "yellowpawn3": pawnToMove.style.top = 404 + "px"; pawnToMove.style.left = 93 + "px"; break;
-        case "yellowpawn4": pawnToMove.style.top = 498 + "px"; pawnToMove.style.left = 93 + "px"; break;
+        case "redpawn1": pawnToMove.style.top = 250 + "px"; pawnToMove.style.left = 550 + "px"; break;
+        case "redpawn2": pawnToMove.style.top = 203 + "px"; pawnToMove.style.left = 503 + "px"; break;
+        case "redpawn3": pawnToMove.style.top = 156 + "px"; pawnToMove.style.left = 550 + "px"; break;
+        case "redpawn4": pawnToMove.style.top = 203 + "px"; pawnToMove.style.left = 598 + "px"; break;
+
+        case "bluepawn1": pawnToMove.style.top = 552 + "px"; pawnToMove.style.left = 598 + "px"; break;
+        case "bluepawn2": pawnToMove.style.top = 552 + "px"; pawnToMove.style.left = 503 + "px"; break;
+        case "bluepawn3": pawnToMove.style.top = 505 + "px"; pawnToMove.style.left = 550 + "px"; break;
+        case "bluepawn4": pawnToMove.style.top = 599 + "px"; pawnToMove.style.left = 550 + "px"; break;
+
+        case "greenpawn1": pawnToMove.style.top = 250 + "px"; pawnToMove.style.left = 201 + "px"; break;
+        case "greenpawn2": pawnToMove.style.top = 203 + "px"; pawnToMove.style.left = 248 + "px"; break;
+        case "greenpawn3": pawnToMove.style.top = 156 + "px"; pawnToMove.style.left = 201 + "px"; break;
+        case "greenpawn4": pawnToMove.style.top = 203 + "px"; pawnToMove.style.left = 155 + "px"; break;
+
+        case "yellowpawn1": pawnToMove.style.top = 552 + "px"; pawnToMove.style.left = 155 + "px"; break;
+        case "yellowpawn2": pawnToMove.style.top = 552 + "px"; pawnToMove.style.left = 248 + "px"; break;
+        case "yellowpawn3": pawnToMove.style.top = 505 + "px"; pawnToMove.style.left = 201 + "px"; break;
+        case "yellowpawn4": pawnToMove.style.top = 599 + "px"; pawnToMove.style.left = 201 + "px"; break;
     }
 }
 
@@ -219,7 +222,7 @@ function randomNum() {
     }
     if (num != 6&&DontHaveOtherFree()) {
         var bad = document.getElementById('badtext');
-        bad.innerText = "Unfortunatlly you stuck";
+        bad.innerText = "Unfortunately you're stuck";
         window.setTimeout(changePlayer, 1000);
         clicked = false;
     }
@@ -275,12 +278,12 @@ function randomMove(Color, paw) {
 
                             case "blue":
                                 doc.style.left = 622 + 'px';
-                                doc.style.top = 435 + "px";
+                                doc.style.top = 434 + "px";
                                 break;
 
                             case "green":
-                                doc.style.left = 128 + 'px';
-                                doc.style.top = 336 + "px";
+                                doc.style.left = 127 + 'px';
+                                doc.style.top = 335 + "px";
                                 break;
                         }
                         onboard[currpawn] = 1;
