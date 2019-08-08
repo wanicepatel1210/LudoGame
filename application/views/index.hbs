@@ -36,7 +36,8 @@
                             'board_id' : id
                         },
                         success: function(response) {
-                            window.location.href = "/gameBoard";
+                          var url = '/gameBoard' + '?id='+id;
+                            window.location.href = url;
                         },
                         error: function(response) {
                             alert("Error on joining game credentials");

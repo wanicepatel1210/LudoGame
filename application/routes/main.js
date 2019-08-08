@@ -95,10 +95,25 @@ router.get('/leaderBoard', (req, res) => {
 });
 
 router.get('/gameBoard', (req, res) => {
-    console.log('Game Board');
+    console.log('---Game Board---');
+    console.log('id'+req.query.id);
+    const sql = `CALL getBoardMember(?)`;
+    db.query(sql, req.query.id, (error, results) => {
+        if (error) {
+            console.log("error0");
+            return console.error("error");
+        }
+        else{
+          var a = results[0];
     res.render('Ludo-game', {
+        'player1':a[0].name,
+        'player2':a[1].name,
+        'player3':a[0].name,
+        'player4':a[0].name,
         session: req.session ? req.session : ''
     });
+  }
+});
 });
 
 module.exports = router

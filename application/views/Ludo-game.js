@@ -39,12 +39,17 @@ function Stuck() {
 
 function changePlayer() {
     if (num != 6){
+      debugger;
         var text = document.getElementById('player');
+        var player1 = document.getElementById('player1').value;
+        var player2 = document.getElementById('player2').value;
+        var player3 = document.getElementById('player3').value;
+        var player4 = document.getElementById('player4').value;
         switch (text.innerText) {
-            case "red": text.innerText = text.style.color = "blue"; break;
-            case "blue": text.innerText = text.style.color = "yellow"; break;
-            case "yellow": text.innerText = text.style.color = "green"; break;
-            case "green": text.innerText = text.style.color = "red"; break;
+            case player1: text.innerText = player2;text.style.color = "blue"; break;
+            case player2: text.innerText = player3;text.style.color = "yellow"; break;
+            case player3: text.innerText = player4;text.style.color = "green"; break;
+            case player4: text.innerText = player1;text.style.color = "red"; break;
         }
     }
     var badtext = document.getElementById('badtext');
