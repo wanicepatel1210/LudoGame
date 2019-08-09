@@ -6,13 +6,18 @@
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous">
         </script>
+        <script defer src="http://localhost:80/socket.io/socket.io.js"></script>
+        <script defer src="js/socketScript.js"></script>
         <script>
             $(function(){
                 $("#header").load("header.hbs");
             });
+            var loggedInId = '';
+            var loggedInName = '';
             $(document).ready(function() {
-                var loggedInId = '{{session.user.id}}';
-                var loggedInName = '{{session.user.name}}';
+              debugger;
+                loggedInId = '{{session.user.id}}';
+                loggedInName = '{{session.user.name}}';
                 $("#header").load("header.hbs", function() {
                     if(loggedInId) {
                         $('#btnLogout').show();
@@ -60,6 +65,33 @@
                 font-size:larger;
                 color:darkred;
             }
+            #message-container {
+              width: 40%;
+              max-width: 1200px;
+            }
+
+            #message-container div {
+              background-color: #CCC;
+              padding: 5px;
+            }
+
+            #message-container div:nth-child(2n) {
+              background-color: #FFF;
+            }
+
+            #send-container {
+              position: fixed;
+              padding-bottom: 30px;
+              bottom: 0;
+              background-color: white;
+              max-width: 1200px;
+              width: 40%;
+              display: flex;
+            }
+
+            #message-input {
+              flex-grow: 1;
+            }
         </style>
         <script src="Ludo-game.js"></script>
     </head>
@@ -67,6 +99,9 @@
         <div id="header"></div>
         <div id="main">
             <div id="board"></div>
+            <input type="hidden" value="{{board_id}}" name="board_id" id="hdnBoardId">
+            <input type="hidden" value="{{session.user.id}}" name="user_id" id="hdnUserId">
+            <input type="hidden" value="{{session.user.name}}" name="user_name" id="hdnUserName">
             <!--<button type="button" onclick="stepLeft()">Left</button>
             <button type="button" onclick="stepRight()">Right</button>
             <button type="button" onclick="stepUp()">Top</button>
@@ -101,11 +136,21 @@
             <div class="pawns" id="bluepawn3" onclick="randomMove('blue',3)" style="background-color:blue;top:505px;left:550px;"></div>
             <div class="pawns" id="bluepawn4" onclick="randomMove('blue',4)" style="background-color:blue;top:599px;left:550px;"></div>
 
-
-            <h4 id="uselesstext1">It`s </h4>
-            <h3 id="player" style="float:left; color:red">red</h3>
-            <h4 id="uselesstext2">s turn</h4>
-            <p id="badtext" style="float:left;"></p>
+            <div style="float:left">
+              <div class="row">
+                <h4 id="uselesstext1">It`s </h4>
+                <h3 id="player" style="float:left; color:red">red</h3>
+                <h4 id="uselesstext2">s turn</h4>
+                <p id="badtext" style="float:left;"></p>
+              </div>
+            </div>
+            <div style="float:left;width:40%">
+              <div id="message-container"></div>
+              <form id="send-container">
+                <input type="text" id="message-input">
+                <button type="submit" id="send-button">Send</button>
+              </form>
+            </div>
         </div>
         <!--<footer title="Copyright by Slavi Koen" id="copyright">FOR ME</footer>-->
     </body>
