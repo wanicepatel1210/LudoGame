@@ -37,6 +37,23 @@ io.on('connection', socket => {
     console.log("Player : " + boards[board_id].players[user.id]);
     socket.to(board_id).broadcast.emit('chat-message', { message: message, name: boards[board_id].players[user.id].name })
   });
+
+  socket.on('roll_dice', (board_id,num) => {
+    socket.to(board_id).broadcast.emit('roll-dice', num);
+  });
+
+  socket.on('change_player',(board_id, c) => {
+    socket.to(board_id).broadcast.emit('change-player', c);
+  });
+
+  socket.on('send_data', (board_id,pawn_data) => {
+    socket.to(board_id).broadcast.emit('send_data_to_all', {pawn_data:pawn_data});
+  });
+
+  socket.on('notify_player', (board_id,name,color,count) => {
+    socket.to(board_id).broadcast.emit('notify_to_all', {name:name, color:color, count:count});
+  });
+
   socket.on('disconnect', (board) => {
     console.log('user disconnected!!');
     //socket.to(board).broadcast.emit('user-disconnected', boards[board].players[socket.id])
@@ -148,12 +165,21 @@ router.get('/leaderBoard', (req, res) => {
 });
 
 router.get('/gameBoard', (req, res) => {
-  var board_id = req.query.board_id;
-  console.log('Game Boards : ' + JSON.stringify(boards[board_id]));
-  res.render('Ludo-game', {
-    board_id: req.query.board_id,
-    session: req.session ? req.session : ''
-  });
+    var board_id = req.query.board_id;
+    const sql = `CALL getBoardMember(?)`;
+    db.query(sql, board_id, (error, results) => {
+        if (error) {
+            console.log("error0");
+            return console.error("error");
+        }
+        else{
+          res.render('Ludo-game', {
+            players: results[0],
+            board_id: req.query.board_id,
+            session: req.session ? req.session : ''
+    });
+  }
+});
 });
 
 module.exports = router
