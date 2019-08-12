@@ -61,7 +61,7 @@
                                     url : '/create_board',
                                     type: 'post',
                                     success: function(response) {
-                                        window.location.href = "/gameBoard";
+					window.location.href = "/gameBoard?board_id="+response.board_id;
                                     },
                                     error: function(response) {
                                         alert("Error on joining game credentials");
@@ -76,7 +76,7 @@
                                         'board_id' : $('#hdnJoinGameId').val()
                                     },
                                     success: function(response) {
-                                        window.location.href = "/gameBoard";
+					window.location.href = "/gameBoard?board_id="+response.board_id;
                                     },
                                     error: function(response) {
                                         alert("Error on joining game credentials");
