@@ -15,7 +15,6 @@
             var loggedInId = '';
             var loggedInName = '';
             $(document).ready(function() {
-              debugger;
                 loggedInId = '{{session.user.id}}';
                 loggedInName = '{{session.user.name}}';
                 $("#header").load("header.hbs", function() {
@@ -30,6 +29,25 @@
                         $('#profileName').text('');
                     }
                 });
+                /* Display joined players and start the game once we have 4 players joined */
+                var count = $('[id^=player-]').length;
+                if(count == 4)
+                {
+                  $('#PlayerList').hide();
+                  $('#dice').show();
+                  $('#turn').show();
+
+                  var playerName = $('#player-0').val();
+                  $('#playerName').text(playerName);
+                }
+                else {
+                  $('#PlayerList').show();
+                  $('#dice').hide();
+                  $('#turn').hide();
+                }
+                var name = $($('[id^=player-]')[count-1]).val();
+                var color = $($('[id^=color-]')[count-1]).val();
+                socket.emit('notify_player', board_id, name, color, count);
             });
         </script>
         <title>Ludo Game Board</title>
@@ -110,7 +128,27 @@
             <button type="button" id="green">Green</button>
             <button type="button" id="blue">Blue</button>
             <button type="button"  id="yellow">Yellow</button>-->
+            <div id="PlayerList">
+              <label>Game will start once 4 players joined</label><br/>
+              <label>Joined Players:</label>
+              <table id="tblPlayers" style="width:10%;" border="1px">
+                <tr>
+                  <th>Name</th>
+                  <th>Color</th>
+                </tr>
+                {{#each players}}
+                  <tr>
+                    <td>
+                        {{name}}
+                    </td>
+                    <td>
+                        {{color}}
+                    </td>
+                  </tr>
+                {{/each}}
 
+              </table>
+            </div>
             <div id="dice" onclick="randomNum()" style="background-image:url(Images/dice.gif);background-size:contain; width:150px;height:150px; float:left;"></div>
             <!-- red pawns  start top 28 left 318-->
             <div class="pawns" id="redpawn1" onclick="randomMove('red',1)" style="background-color:red;top:250px;left:550px;"></div>
@@ -136,14 +174,25 @@
             <div class="pawns" id="bluepawn3" onclick="randomMove('blue',3)" style="background-color:blue;top:505px;left:550px;"></div>
             <div class="pawns" id="bluepawn4" onclick="randomMove('blue',4)" style="background-color:blue;top:599px;left:550px;"></div>
 
-            <div style="float:left">
-              <div class="row">
-                <h4 id="uselesstext1">It`s </h4>
-                <h3 id="player" style="float:left; color:red">red</h3>
-                <h4 id="uselesstext2">s turn</h4>
-                <p id="badtext" style="float:left;"></p>
-              </div>
+            <div id="turn">
+            <h4 id="uselesstext1">It's </h4>
+            <h4 id="player" style="float:left; color:red">red</h4>
+            <h4 id="playerName" style="float:left;margin-left:5px;"></h4>
+            <h4 id="uselesstext2" style="padding: 0.75%">'s turn</h4>
+            <p id="badtext" style="float:left;"></p>
+          </div>
+            <div id="Players">
+              {{#each players}}
+                <input type="hidden" id="player-{{@index}}" value="{{name}}">
+                <input type="hidden" id="color-{{@index}}" value="{{color}}">
+              {{/each}}
             </div>
+
+            <!-- <input type="hidden" id="player1" name="player1" value="{{player1}}">
+            <input type="hidden" id="player2" name="player2" value="{{player2}}">
+            <input type="hidden" id="player3" name="player3" value="{{player3}}">
+            <input type="hidden" id="player4" name="player4" value="{{player4}}"> -->
+
             <div style="float:left;width:40%">
               <div id="message-container"></div>
               <form id="send-container">
