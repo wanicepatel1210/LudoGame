@@ -1,0 +1,105 @@
+@import url(http://fonts.googleapis.com/css?family=Raleway);
+
+* {
+    margin: 0px;
+    padding: 0px;
+    box-sizing: border-box !important;
+}
+
+::-webkit-scrollbar {
+  width: 1px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #888;
+}
+
+body {
+    font-family: 'Raleway', sans-serif !important;
+}
+
+main {
+    display: flex !important;
+    width: 90%;
+    margin: auto;
+}
+
+button {
+        font-family: 'Raleway', sans-serif;
+        cursor: pointer;
+        border-style: none;
+}
+
+section > header {
+    font-size: x-large;
+    text-align: center;
+    font-weight: bold;
+    background-color: #546e7a;
+    color: #ffffff;
+}
+
+#leaderBoard {
+    margin: 2% 1% 0% 0%;
+    flex: 2;
+}
+
+.pointTable {
+    display: grid;
+    grid-template-columns: auto auto;
+    overflow: auto;
+    max-height: 73vh;
+}
+
+.entry {
+    border-style: solid;
+    border-width: thin;
+    padding: 1%;
+}
+
+#createGame {
+    margin: 2% 0% 0% 1%;
+    flex: 5;
+}
+
+.host {
+    box-shadow: 1px 1px 5px #bfbfbf;
+    width: 100%;
+    margin: 0%;
+    background-color: #4CAF50;
+    color: #ffffff;
+    font-size: x-large;
+    font-weight: bold;
+}
+
+.gridTiles {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    overflow: auto;
+    max-height: 70vh;
+}
+
+.tiles{
+    border-radius: 2%;
+    box-shadow: 2px 2px 10px #bfbfbf;
+    padding: 5%;
+    margin: 5%;
+    background-color: #ffffff;
+}
+
+.join {
+    box-shadow: 1px 1px 5px #bfbfbf;
+    padding: 1% 5% 1% 5%;
+    background-color: #4CAF50;
+    color: #ffffff;
+}
+
+.tiles > button {
+    border-radius: 10%;
+}
+
+b {
+    text-transform: uppercase;
+}
+a {
+    cursor: pointer !important;
+}

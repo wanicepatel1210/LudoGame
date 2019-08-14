@@ -1,0 +1,205 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+            integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+            crossorigin="anonymous">
+        </script>
+	<script defer src="http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/socket.io/socket.io.js"></script>
+        <script defer src="js/socketScript.js"></script>
+        <script>
+            $(function(){
+                $("#header").load("header.hbs");
+            });
+            var loggedInId = '';
+            var loggedInName = '';
+            $(document).ready(function() {
+                loggedInId = '{{session.user.id}}';
+                loggedInName = '{{session.user.name}}';
+                $("#header").load("header.hbs", function() {
+                    if(loggedInId) {
+                        $('#btnLogout').show();
+                        $('#btnLogin').hide();
+                        $('#profileName').text('Hi ' + loggedInName);
+                    }
+                    else {
+                        $('#btnLogout').hide();
+                        $('#btnLogin').show();
+                        $('#profileName').text('');
+                    }
+                });
+                /* Display joined players and start the game once we have 4 players joined */
+                var count = $('[id^=player-]').length;
+                if(count == 4)
+                {
+                  $('#PlayerList').hide();
+                  $('#dice').show();
+                  $('#turn').show();
+
+                  var playerName = $('#player-0').val();
+                  $('#playerName').text(playerName);
+                }
+                else {
+                  $('#PlayerList').show();
+                  $('#dice').hide();
+                  $('#turn').hide();
+                }
+                var name = $($('[id^=player-]')[count-1]).val();
+                var color = $($('[id^=color-]')[count-1]).val();
+                socket.emit('notify_player', board_id, name, color, count);
+            });
+        </script>
+        <title>Ludo Game Board</title>
+        <style>
+            #main{
+            //width:1000px;
+            // float:left;
+            }
+            body{
+                background-color: #F3F3F9 !important;
+            }
+            .pawns{
+                width:30px;
+                height:30px;
+                border-radius:20px;
+                position:absolute;
+            }
+            #board{
+                background:url(Images/board.gif) no-repeat;
+                background-size:cover;
+                width:650px;
+                height:550px;
+                float:left;
+                margin-top:8px;
+                margin-left:8%;
+            }
+            #uselesstext1{
+                float:left;
+                padding-left:10px;
+                padding-right:10px;
+            }
+            footer{
+                font-size:larger;
+                color:darkred;
+            }
+            #message-container {
+              max-width: 1200px;
+            }
+
+            #message-container div {
+              background-color: #CCC;
+              padding: 5px;
+            }
+
+            #message-container div:nth-child(2n) {
+              background-color: #FFF;
+            }
+
+            #send-container {
+              position: fixed;
+              padding-bottom: 30px;
+              bottom: 0;
+              background-color: white;
+              max-width: 1200px;
+              width: 40%;
+              display: flex;
+            }
+
+            #message-input {
+              flex-grow: 1;
+            }
+        </style>
+        <script src="Ludo-game.js"></script>
+    </head>
+    <body>
+        <div id="header"></div>
+        <div id="main">
+            <div id="board"></div>
+            <input type="hidden" value="{{board_id}}" name="board_id" id="hdnBoardId">
+            <input type="hidden" value="{{session.user.id}}" name="user_id" id="hdnUserId">
+            <input type="hidden" value="{{session.user.name}}" name="user_name" id="hdnUserName">
+            <!--<button type="button" onclick="stepLeft()">Left</button>
+            <button type="button" onclick="stepRight()">Right</button>
+            <button type="button" onclick="stepUp()">Top</button>
+            <button type="button" onclick="stepDown()">Bottom</button>-->
+            <!--    <button type="button"  id="red">Red</button>
+            <button type="button" id="green">Green</button>
+            <button type="button" id="blue">Blue</button>
+            <button type="button"  id="yellow">Yellow</button>-->
+            <div id="PlayerList">
+              <label>Game will start once 4 players joined</label><br/>
+              <label>Joined Players:</label>
+              <table id="tblPlayers" style="width:10%;" border="1px">
+                <tr>
+                  <th>Name</th>
+                  <th>Color</th>
+                </tr>
+                {{#each players}}
+                  <tr>
+                    <td>
+                        {{name}}
+                    </td>
+                    <td>
+                        {{color}}
+                    </td>
+                  </tr>
+                {{/each}}
+
+              </table>
+            </div>
+            <div id="dice" onclick="randomNum()" style="background-image:url(Images/dice.gif);background-size:contain; width:150px;height:150px; float:left;"></div>
+            <!-- red pawns  start top 28 left 318-->
+            <div class="pawns" id="redpawn1" onclick="randomMove('red',1)" style="background-color:red;top:250px;left:550px;"></div>
+            <div class="pawns" id="redpawn2" onclick="randomMove('red',2)" style="background-color:red;top:203px;left:503px;"></div>
+            <div class="pawns" id="redpawn3" onclick="randomMove('red',3)" style="background-color:red;top:156px;left:550px;"></div>
+            <div class="pawns" id="redpawn4" onclick="randomMove('red',4)" style="background-color:red;top:203px;left:598px;"></div>
+
+            <!-- yellow pawns  start top 523 left 218-->
+            <div class="pawns" id="yellowpawn1" onclick="randomMove('yellow',1)" style="background-color:darkgoldenrod;top:552px;left:155px;"></div>
+            <div class="pawns" id="yellowpawn2" onclick="randomMove('yellow',2)" style="background-color:darkgoldenrod;top:552px;left:248px;"></div>
+            <div class="pawns" id="yellowpawn3" onclick="randomMove('yellow',3)" style="background-color:darkgoldenrod;top:505px;left:201px;"></div>
+            <div class="pawns" id="yellowpawn4" onclick="randomMove('yellow',4)" style="background-color:darkgoldenrod;top:599px;left:201px;"></div>
+
+            <!-- green pawns  start top 227 left 22-->
+            <div class="pawns" id="greenpawn1" onclick="randomMove('green',1)" style="background-color:green;top:250px;left:201px;"></div>
+            <div class="pawns" id="greenpawn2" onclick="randomMove('green',2)" style="background-color:green;top:203px;left:248px;"></div>
+            <div class="pawns" id="greenpawn3" onclick="randomMove('green',3)" style="background-color:green;top:156px;left:201px;"></div>
+            <div class="pawns" id="greenpawn4" onclick="randomMove('green',4)" style="background-color:green;top:203px;left:155px;"></div>
+
+            <!-- blue pawns  start top 326 left 515-->
+            <div class="pawns" id="bluepawn1" onclick="randomMove('blue',1)" style="background-color:blue;top:552px;left:598px;"></div>
+            <div class="pawns" id="bluepawn2" onclick="randomMove('blue',2)" style="background-color:blue;top:552px;left:503px;"></div>
+            <div class="pawns" id="bluepawn3" onclick="randomMove('blue',3)" style="background-color:blue;top:505px;left:550px;"></div>
+            <div class="pawns" id="bluepawn4" onclick="randomMove('blue',4)" style="background-color:blue;top:599px;left:550px;"></div>
+
+            <div id="turn">
+            <h4 id="uselesstext1">It's </h4>
+            <h4 id="player" style="float:left; color:red">red</h4>
+            <h4 id="playerName" style="float:left;margin-left:5px;"></h4>
+            <h4 id="uselesstext2" style="padding: 0.75%">'s turn</h4>
+            <p id="badtext" style="float:left;"></p>
+          </div>
+            <div id="Players">
+              {{#each players}}
+                <input type="hidden" id="player-{{@index}}" value="{{name}}">
+                <input type="hidden" id="color-{{@index}}" value="{{color}}">
+              {{/each}}
+            </div>
+
+            <!-- <input type="hidden" id="player1" name="player1" value="{{player1}}">
+            <input type="hidden" id="player2" name="player2" value="{{player2}}">
+            <input type="hidden" id="player3" name="player3" value="{{player3}}">
+            <input type="hidden" id="player4" name="player4" value="{{player4}}"> -->
+
+            <div style="float:left;width:39%;overflow-y:scroll;height:350px;">
+              <div id="message-container"></div>
+              <form id="send-container">
+                <input type="text" id="message-input">
+                <button type="submit" id="send-button">Send</button>
+              </form>
+            </div>
+        </div>
+        <!--<footer title="Copyright by Slavi Koen" id="copyright">FOR ME</footer>-->
+    </body>
+</html>

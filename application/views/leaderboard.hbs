@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width,initial-scale=1">
+        <title>Ludo Game - Leaderboard</title>
+        <link href="./plugins/tables/css/datatable/dataTables.bootstrap4.min.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <script
+            src="https://code.jquery.com/jquery-3.3.1.js"
+    		integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
+    		crossorigin="anonymous">
+        </script>
+        <script>
+            $(function(){
+                $("#header").load("header.hbs");
+            });
+            $(document).ready(function() {
+                var loggedInId = '{{session.user.id}}';
+                var loggedInName = '{{session.user.name}}';
+                $("#header").load("header.hbs", function() {
+                    if(loggedInId) {
+                        $('#btnLogout').show();
+                        $('#btnLogin').hide();
+                        $('#profileName').text('Hi ' + loggedInName);
+                    }
+                    else {
+                        $('#btnLogout').hide();
+                        $('#btnLogin').show();
+                        $('#profileName').text('');
+                    }
+                });
+            });
+        </script>
+    </head>
+
+    <body class = "leaderboard">
+        <div id="header"></div>
+        <div class="container-fluid" style="width:92.5%;">
+            <div class="row">
+                <div class="col-12">
+                    <div class="card">
+                        <div class="card-body">
+                            <h4 class="card-title">Data Table</h4>
+                            <div class="table-responsive">
+                                <table class="table table-striped table-bordered zero-configuration">
+                                    <thead>
+                                        <tr>
+                                            <th>Rank</th>
+                                            <th>Name</th>
+                                            <th>Points</th>
+                                            <th>No of game played</th>
+                                            <th>Win Percentage</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                      {{#each leaderBoard}}
+        								               <tr>
+                                            <td>{{@index}}</td>
+                                            <td>{{name}}</td>
+                                            <td>{{point}}</td>
+                                            <td>{{totalGame}}</td>
+                                            <td>-</td>
+                                        </tr>
+                                      {{/each}}
+        								            </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="plugins/common/common.min.js"></script>
+        <script src="js/custom.min.js"></script>
+        <script src="js/settings.js"></script>
+        <script src="js/gleek.js"></script>
+        <script src="js/styleSwitcher.js"></script>
+        <script src="./plugins/tables/js/jquery.dataTables.min.js"></script>
+        <script src="./plugins/tables/js/datatable/dataTables.bootstrap4.min.js"></script>
+        <script src="./plugins/tables/js/datatable-init/datatable-basic.min.js"></script>
+    </body>
+</html>

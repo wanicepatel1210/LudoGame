@@ -1,0 +1,192 @@
+<!doctype html>
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset='utf-8'>
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="css/header.css">
+
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+        <title>Header</title>
+        <script type = "text/javascript">
+            function check_pass() {
+                if ((document.getElementById('Password').value == "") || (document.getElementById('Password2').value == "")) {
+                    document.getElementById('register_submit').disabled = true;
+                    document.getElementById('Password2').style.borderColor = "white";
+                }
+                else if (document.getElementById('Password').value == document.getElementById('Password2').value) {
+                    document.getElementById('register_submit').disabled = false;
+                    document.getElementById('Password2').style.borderColor = "white";
+                }
+                else {
+                    document.getElementById('register_submit').disabled = true;
+                    document.getElementById('Password2').style.borderColor = "red";
+                }
+            }
+
+            $(document).ready(function() {
+                $("#cssmenu ul li").removeClass('active');
+                if (document.URL.indexOf('leaderBoard') != -1) {
+                    $("#leaderboard").addClass("active");
+                }
+                else if (document.URL.indexOf('index') != -1) {
+                    $("#home").addClass("active");
+                }
+                else if (document.URL.indexOf('rules') != -1) {
+                    $("#rules").addClass("active");
+                }
+                $("#login_submit").click(function() {
+                    var login = $.ajax({
+                        url : '/login',
+                        type: 'post',
+                        data: {
+                            'email' : $('#username').val(),
+                            'password': $('#password').val()
+                        },
+                        success: function(response) {
+                            $('#loginModal').hide();
+                            $('.modal-backdrop').remove();
+                            $('#profileName').text(() => {
+                                return "Hi, " + response.name;
+                            });
+                            if(response.name != "") {
+                                window.location.href = "/index"
+                            }
+                            if($('#hdnFlag').val() == 'true') {
+                                $.ajax({
+                                    url : '/create_board',
+                                    type: 'post',
+                                    success: function(response) {
+					window.location.href = "/gameBoard?board_id="+response.board_id;
+                                    },
+                                    error: function(response) {
+                                        alert("Error on joining game credentials");
+                                    }
+                                });
+                            }
+                            else if($('#hdnJoinFlag').val() == 'true') {
+                                $.ajax({
+                                    url : '/join_board',
+                                    type: 'post',
+                                    data: {
+                                        'board_id' : $('#hdnJoinGameId').val()
+                                    },
+                                    success: function(response) {
+					window.location.href = "/gameBoard?board_id="+response.board_id;
+                                    },
+                                    error: function(response) {
+                                        alert("Error on joining game credentials");
+                                    }
+                                });
+                            }
+                        },
+                        error: function(response) {
+                            alert("Invalid credentials");
+                        }
+                    });
+                });
+                $("#btnLogout").click(function() {
+                    var login = $.ajax({
+                        url : '/logout',
+                        type: 'post',
+                        success: function(response) {
+                            window.location.href = "/index";
+                        },
+                        error: function(response) {
+                            alert("Error");
+                        }
+                    });
+                });
+            });
+        </script>
+    </head>
+
+    <body>
+        <header class="topnav">
+            <div style="display: flex;">
+                <div style="flex: 5;">
+                    <a style="float: right;" class="logo">Ludo Game</a>
+                </div>
+                <div style="flex: 3;">
+                    <a style="float: right; margin-top: 10px; font-size: large;" href="/profile" id="profileName"></a>
+                </div>
+                <div style="flex: 1;">
+                    <a style="flex: 1;" class="loginNav">
+                        <button class="login" type="button" data-toggle="modal" data-target="#loginModal" id="btnLogin" value="Login">Login</button>
+                        <button class="login" type="button" id="btnLogout" style="display:none;">Logout</button>
+                    </a>
+                </div>
+            </div>
+        </header>
+
+        <!-- Login Modal -->
+        <div class=" modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Login</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login-input">
+                            <div class="form-group">
+                                <input id="username" type="email" class="form-control" placeholder="Email" name="email" required>
+                            </div>
+                            <div class="form-group">
+                                <input id="password" type="password" class="form-control" placeholder="Password" name="password" required>
+                            </div>
+                        </form>
+                        <button class="btn login-form__btn submit w-100" id="login_submit">Sign In</button>
+                        <p class="mt-5 login-form__footer">Dont have account? <a href="#" data-toggle="modal" data-target="#SignUpModal" class=" text-primary">Sign Up</a> now</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SignUp Modal -->
+        <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Register to play Ludo</h5>
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <form class="login-input" action="/register" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="Name" placeholder="Name" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="email" class="form-control" name="Email" placeholder="Email" required>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="Password" name = "Password" placeholder="Password" onkeyup='check_pass();' required/>
+                            </div>
+                            <div class="form-group">
+                                <input type="password" class="form-control" id="Password2"name = "Password2" placeholder="Re-type Password" onkeyup='check_pass();' required/>
+                            </div>
+                            <button class="btn login-form__btn submit w-100" id="register_submit" type="submit" disabled>Register</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <nav id='cssmenu'>
+            <ul class="navMenu">
+                <li id="home" name="home"><a href='/index'>Home</a></li>
+                <li id="leaderboard" name="leaderboard"><a href='/leaderBoard'>Leaderboard</a></li>
+                <li id="rules" name="rules"><a href='/rules'>How to Play</a></li>
+                <!-- <li id="contact" name="contact"><a href='#contact'>Contact</a></li> -->
+            </ul>
+        </nav>
+    </body>
+<html>
