@@ -38,7 +38,16 @@ io.on('connection', socket => {
     socket.to(board_id).broadcast.emit('chat-message', { message: message, name: boards[board_id].players[user.id].name })
   });
 
-  socket.on('roll_dice', (board_id,num) => {
+  socket.on('roll_dice', (board_id,num,current_player) => {
+    console.log('current_player' +current_player);
+    const querString = 'UPDATE GAME_MOVES SET current_player = (?) WHERE fk_moves_board_id = (?);';
+    db.query(querString, [current_player,board_id], (err, results) => {
+      if (err) {
+        console.log("err : " + err)
+      } else {
+        console.log("current_player Updated");
+      }
+    })
     socket.to(board_id).broadcast.emit('roll-dice', num);
   });
 
@@ -46,7 +55,17 @@ io.on('connection', socket => {
     socket.to(board_id).broadcast.emit('change-player', c);
   });
 
-  socket.on('send_data', (board_id,pawn_data,currPawn) => {
+socket.on('send_data', (board_id,pawn_data,currPawn) => {
+    debugger;
+    const querString = 'UPDATE GAME_MOVES SET moves = (?) WHERE fk_moves_board_id = (?);';
+    db.query(querString, [pawn_data,board_id], (err, results) => {
+      if (err) {
+        console.log("err : " + err)
+      } else {
+        console.log("Moves Updated");
+      }
+    })
+    //const queryString = ('INSERT INTO notes (note) VALUES (?)', data.note);
     socket.to(board_id).broadcast.emit('send_data_to_all', {pawn_data:pawn_data, currPawn:currPawn});
   });
 
@@ -108,6 +127,16 @@ router.post('/create_board', (req, res) => {
       boards[results[0][0].board_id] = {
         players: {}
       }
+      // insert query on GAME_MOVES
+      const queryString1 =  'INSERT INTO GAME_MOVES (fk_moves_board_id) VALUES (?);';
+      db.query(queryString1,results[0][0].board_id,(err,results) => {
+        if (err) {
+          console.log("err in inside query" + err)
+        } else {
+          console.log("Update work");
+        }
+      });
+
       // Send message that new board was created
       io.emit('board-created', results[0][0].board_id);
       res.status(200).json(results[0][0]).end();
@@ -173,8 +202,11 @@ router.get('/gameBoard', (req, res) => {
             return console.error("error");
         }
         else{
+          console.log("pawn_data"+ results[1][0].current_player);
           res.render('Ludo-game', {
             players: results[0],
+            pawn_data:results[1][0].moves,
+            current_player:results[1][0].current_player,
             board_id: req.query.board_id,
             session: req.session ? req.session : ''
     });
