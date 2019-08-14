@@ -23,6 +23,9 @@ var boards = {};
 //Code for creating room and join them
 io.on('connection', socket => {
   console.log('Connected!');
+  //default username
+	socket.username = "Anonymous" + Math.floor(Math.random() * 100001);
+
   socket.on('new-player', (board_id, user) => {
     console.log("Player " + user.id + " is joining board " + board_id);
     socket.name = user.name;
@@ -71,6 +74,27 @@ socket.on('send_data', (board_id,pawn_data,currPawn) => {
   socket.on('notify_player', (board_id,name,color,count) => {
     socket.to(board_id).broadcast.emit('notify_to_all', {name:name, color:color, count:count});
   });
+
+  //listen on change_username
+  socket.on('change_username', (data) => {
+    socket.username = data.username
+  })
+
+  //listen on new_message
+  socket.on('new_message', (data) => {
+    //broadcast the new message
+    io.sockets.emit('new_message', {
+      message: data.message,
+      username: socket.username
+    });
+  })
+
+  //listen on typing
+  socket.on('typing', (data) => {
+    socket.broadcast.emit('typing', {
+      username: socket.username
+    })
+  })
 
   socket.on('disconnect', (board) => {
     console.log('user disconnected!!');
