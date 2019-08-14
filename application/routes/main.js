@@ -46,8 +46,8 @@ io.on('connection', socket => {
     socket.to(board_id).broadcast.emit('change-player', c);
   });
 
-  socket.on('send_data', (board_id,pawn_data) => {
-    socket.to(board_id).broadcast.emit('send_data_to_all', {pawn_data:pawn_data});
+  socket.on('send_data', (board_id,pawn_data,currPawn) => {
+    socket.to(board_id).broadcast.emit('send_data_to_all', {pawn_data:pawn_data, currPawn:currPawn});
   });
 
   socket.on('notify_player', (board_id,name,color,count) => {

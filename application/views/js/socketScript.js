@@ -111,6 +111,11 @@ socket.on('send_data_to_all', data => {
   $('#greenpawn2').css({"top": pawn_data.green_pawn_2[0], "left": pawn_data.green_pawn_2[1]});
   $('#greenpawn3').css({"top": pawn_data.green_pawn_3[0], "left": pawn_data.green_pawn_3[1]});
   $('#greenpawn4').css({"top": pawn_data.green_pawn_4[0], "left": pawn_data.green_pawn_4[1]});
+
+  var pawnPosition = JSON.parse(data.currPawn);
+  positions = pawnPosition.position;
+  onboard = pawnPosition.onboard;
+
   var dice = document.getElementById('dice');
   dice.style.backgroundImage = "url(Images/dice.gif)";
 })

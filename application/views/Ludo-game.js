@@ -373,10 +373,11 @@ function randomMove(Color, paw) {
             }
         }
     }
-    pawn_position();
+    var storePosition = JSON.stringify({position:positions,onboard:onboard});
+    pawn_position(storePosition);
 }
 /* set pawn position for broadcasting */
-function pawn_position(){
+function pawn_position(storePosition){
 	var red_pawn_1= document.getElementById('redpawn1').style;
 	var red_pawn_2= document.getElementById('redpawn2').style;
 	var red_pawn_3= document.getElementById('redpawn3').style;
@@ -397,6 +398,8 @@ function pawn_position(){
 	var green_pawn_3= document.getElementById('greenpawn3').style;
 	var green_pawn_4= document.getElementById('greenpawn4').style;
 
+  debugger;
+
 	var a =JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left]});
 	var pawn_data = JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left],red_pawn_2:[red_pawn_2.top,red_pawn_2.left],red_pawn_3:[red_pawn_3.top,red_pawn_3.left],red_pawn_4:[red_pawn_4.top,red_pawn_4.left],
 	blue_pawn_1:[blue_pawn_1.top,blue_pawn_1.left],blue_pawn_2:[blue_pawn_2.top,blue_pawn_2.left],blue_pawn_3:[blue_pawn_3.top,blue_pawn_3.left],blue_pawn_4:[blue_pawn_4.top,blue_pawn_4.left],
@@ -405,5 +408,5 @@ function pawn_position(){
 
 	//var pawn_data = JSON.stringify({red_pawn_1:red_pawn_1,red_pawn_2:red_pawn_2,red_pawn_3:red_pawn_3,red_pawn_4:red_pawn_4,blue_pawn_1:blue_pawn_1,blue_pawn_2:blue_pawn_2,blue_pawn_3:blue_pawn_3,blue_pawn_4:blue_pawn_4,yellow_pawn_1:yellow_pawn_1,yellow_pawn_2:yellow_pawn_2,yellow_pawn_3:yellow_pawn_3,yellow_pawn_4:yellow_pawn_4,blue_pawn_1:blue_pawn_1,blue_pawn_2:blue_pawn_2,blue_pawn_3:blue_pawn_3,blue_pawn_4:blue_pawn_4});
 
-	socket.emit('send_data',board_id,pawn_data);
+	socket.emit('send_data',board_id,pawn_data,storePosition);
 }
