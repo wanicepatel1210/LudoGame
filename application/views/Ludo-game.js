@@ -9,6 +9,44 @@ var allcolor = ["red", "blue", "green", "yellow"];
 var urlParams = new URLSearchParams(window.location.search);
 var board_id = urlParams.get('board_id');
 var pawnOut = {red:0,blue:0,green:0,yellow:0}
+$(document).ready ( function(){
+  var pawn_data = document.getElementById('pawn_data').value;
+  var current_player = document.getElementById('current_player').value;
+  if(pawn_data!=""){
+  pawn_data=JSON.parse(pawn_data);
+  $('#redpawn1').css({"top": pawn_data.red_pawn_1[0], "left": pawn_data.red_pawn_1[1]});
+  $('#redpawn2').css({"top": pawn_data.red_pawn_2[0], "left": pawn_data.red_pawn_2[1]});
+  $('#redpawn3').css({"top": pawn_data.red_pawn_3[0], "left": pawn_data.red_pawn_3[1]});
+  $('#redpawn4').css({"top": pawn_data.red_pawn_4[0], "left": pawn_data.red_pawn_4[1]});
+
+  $('#bluepawn1').css({"top": pawn_data.blue_pawn_1[0], "left": pawn_data.blue_pawn_1[1]});
+  $('#bluepawn2').css({"top": pawn_data.blue_pawn_2[0], "left": pawn_data.blue_pawn_2[1]});
+  $('#bluepawn3').css({"top": pawn_data.blue_pawn_3[0], "left": pawn_data.blue_pawn_3[1]});
+  $('#bluepawn4').css({"top": pawn_data.blue_pawn_4[0], "left": pawn_data.blue_pawn_4[1]});
+
+  $('#yellowpawn1').css({"top": pawn_data.yellow_pawn_1[0], "left": pawn_data.yellow_pawn_1[1]});
+  $('#yellowpawn2').css({"top": pawn_data.yellow_pawn_2[0], "left": pawn_data.yellow_pawn_2[1]});
+  $('#yellowpawn3').css({"top": pawn_data.yellow_pawn_3[0], "left": pawn_data.yellow_pawn_3[1]});
+  $('#yellowpawn4').css({"top": pawn_data.yellow_pawn_4[0], "left": pawn_data.yellow_pawn_4[1]});
+
+  $('#greenpawn1').css({"top": pawn_data.green_pawn_1[0], "left": pawn_data.green_pawn_1[1]});
+  $('#greenpawn2').css({"top": pawn_data.green_pawn_2[0], "left": pawn_data.green_pawn_2[1]});
+  $('#greenpawn3').css({"top": pawn_data.green_pawn_3[0], "left": pawn_data.green_pawn_3[1]});
+  $('#greenpawn4').css({"top": pawn_data.green_pawn_4[0], "left": pawn_data.green_pawn_4[1]});
+
+}
+
+  if(current_player != "")
+  {
+      document.getElementById('player').innerText = current_player;
+      changePlayer();
+  }
+
+
+
+  var dice = document.getElementById('dice');
+  dice.style.backgroundImage = "url(Images/dice.gif)";
+});
 function HaveHover() {
     var count = 0;
     var toKill = "";
@@ -250,7 +288,7 @@ function randomNum() {
   if($('#hdnUserName').val() == $('#playerName').text()) // Player will have access only if it's their turn
   {
     if (!clicked) {
-        num = Math.floor((Math.random() * 6) + 1);;
+        num = Math.floor((Math.random() * 6) + 1);
         var dice = document.getElementById('dice');
         dice.style.backgroundImage = "url(Images/" + num + ".jpg)";
         clicked = true;
@@ -261,7 +299,8 @@ function randomNum() {
         window.setTimeout(changePlayer, 1000);
         clicked = false;
     }
-    socket.emit('roll_dice', board_id, num);
+    var current_player = document.getElementById('player').innerText;
+    socket.emit('roll_dice', board_id, num,current_player);
   }
   else {
     alert("It's not your turn");
@@ -374,10 +413,10 @@ function randomMove(Color, paw) {
         }
     }
     var storePosition = JSON.stringify({position:positions,onboard:onboard});
-    pawn_position(storePosition);
+    pawn_position(currcolor, storePosition);
 }
 /* set pawn position for broadcasting */
-function pawn_position(storePosition){
+function pawn_position(currcolor, storePosition){
 	var red_pawn_1= document.getElementById('redpawn1').style;
 	var red_pawn_2= document.getElementById('redpawn2').style;
 	var red_pawn_3= document.getElementById('redpawn3').style;
@@ -398,15 +437,13 @@ function pawn_position(storePosition){
 	var green_pawn_3= document.getElementById('greenpawn3').style;
 	var green_pawn_4= document.getElementById('greenpawn4').style;
 
-  debugger;
-
 	var a =JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left]});
 	var pawn_data = JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left],red_pawn_2:[red_pawn_2.top,red_pawn_2.left],red_pawn_3:[red_pawn_3.top,red_pawn_3.left],red_pawn_4:[red_pawn_4.top,red_pawn_4.left],
 	blue_pawn_1:[blue_pawn_1.top,blue_pawn_1.left],blue_pawn_2:[blue_pawn_2.top,blue_pawn_2.left],blue_pawn_3:[blue_pawn_3.top,blue_pawn_3.left],blue_pawn_4:[blue_pawn_4.top,blue_pawn_4.left],
 	yellow_pawn_1:[yellow_pawn_1.top,yellow_pawn_1.left],yellow_pawn_2:[yellow_pawn_2.top,yellow_pawn_2.left],yellow_pawn_3:[yellow_pawn_3.top,yellow_pawn_3.left],yellow_pawn_4:[yellow_pawn_4.top,yellow_pawn_4.left],
-	green_pawn_1:[green_pawn_1.top,green_pawn_1.left],green_pawn_2:[green_pawn_2.top,green_pawn_2.left],green_pawn_3:[green_pawn_3.top,green_pawn_3.left],green_pawn_4:[green_pawn_4.top,green_pawn_4.left]});
+	green_pawn_1:[green_pawn_1.top,green_pawn_1.left],green_pawn_2:[green_pawn_2.top,green_pawn_2.left],green_pawn_3:[green_pawn_3.top,green_pawn_3.left],green_pawn_4:[green_pawn_4.top,green_pawn_4.left],currcolor:currcolor});
 
 	//var pawn_data = JSON.stringify({red_pawn_1:red_pawn_1,red_pawn_2:red_pawn_2,red_pawn_3:red_pawn_3,red_pawn_4:red_pawn_4,blue_pawn_1:blue_pawn_1,blue_pawn_2:blue_pawn_2,blue_pawn_3:blue_pawn_3,blue_pawn_4:blue_pawn_4,yellow_pawn_1:yellow_pawn_1,yellow_pawn_2:yellow_pawn_2,yellow_pawn_3:yellow_pawn_3,yellow_pawn_4:yellow_pawn_4,blue_pawn_1:blue_pawn_1,blue_pawn_2:blue_pawn_2,blue_pawn_3:blue_pawn_3,blue_pawn_4:blue_pawn_4});
-
 	socket.emit('send_data',board_id,pawn_data,storePosition);
+
 }

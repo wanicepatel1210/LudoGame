@@ -6,7 +6,7 @@
             integrity="sha256-2Kok7MbOyxpgUVvAk/HJ2jigOSYS2auK4Pfzbm7uH60="
             crossorigin="anonymous">
         </script>
-	<script defer src="http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/socket.io/socket.io.js"></script>
+	      <script defer src="http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/socket.io/socket.io.js"></script>
         <script defer src="js/socketScript.js"></script>
         <script>
             $(function(){
@@ -39,6 +39,7 @@
 
                   var playerName = $('#player-0').val();
                   $('#playerName').text(playerName);
+
                 }
                 else {
                   $('#PlayerList').show();
@@ -186,6 +187,8 @@
                 <input type="hidden" id="color-{{@index}}" value="{{color}}">
               {{/each}}
             </div>
+            <input type="hidden" id="pawn_data" value="{{pawn_data}}">
+            <input type="hidden" id="current_player" value="{{current_player}}">
 
             <!-- <input type="hidden" id="player1" name="player1" value="{{player1}}">
             <input type="hidden" id="player2" name="player2" value="{{player2}}">
