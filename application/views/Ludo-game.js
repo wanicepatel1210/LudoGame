@@ -48,7 +48,7 @@ function changePlayer() {
               $('#playerName').text($('#player-1').val());
               break;
             case "blue":
-              text.innerText = text.style.color = "yellow";
+              text.innerText = "yellow"; text.style.color = "darkgoldenrod";
               $('#playerName').text($('#player-2').val());
               break;
             case "yellow":
