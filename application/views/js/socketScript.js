@@ -1,4 +1,5 @@
 const socket = io('http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com')
+//const socket = io('localhost')
 const messageContainer = document.getElementById('message-container')
 const roomContainer = document.getElementById('room-container')
 const messageForm = document.getElementById('send-container')
