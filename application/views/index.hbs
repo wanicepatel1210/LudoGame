@@ -5,13 +5,14 @@
         <title>Ludo Game - Home</title>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+	      <script defer src="http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/socket.io/socket.io.js"></script>
+        <script defer src="js/socketScript.js"></script>
         <script>
             var loggedInId = '';
             var loggedInName = '';
             $(document).ready(function() {
                 loggedInId = '{{session.user.id}}';
                 loggedInName = '{{session.user.name}}';
-
                 $("#header").load("header.hbs", function() {
                     if(loggedInId) {
                         $('#btnLogout').show();
@@ -36,7 +37,7 @@
                             'board_id' : id
                         },
                         success: function(response) {
-                            window.location.href = "/gameBoard";
+                          window.location.href = "/gameBoard?board_id="+response.board_id;
                         },
                         error: function(response) {
                             alert("Error on joining game credentials");
@@ -52,12 +53,16 @@
 
             <!-- Create game board -->
             function createGame() {
+              var boardName = $('#boardName').val();
                 if(loggedInId) {
                     $.ajax({
                         url : '/create_board',
                         type: 'post',
+                        data: {
+                          board_name: boardName
+                        },
                         success: function(response) {
-                            window.location.href = "/gameBoard";
+                            window.location.href = "/gameBoard?board_id="+response.board_id;
                         },
                         error: function(response) {
                             alert("Error on joining game credentials");
@@ -126,11 +131,12 @@
                 </div>
             </section>
             <section id="createGame">
-                <button type="button" name="button" onclick="createGame()" class="host">Host a game</button>
+                <button type="button" name="button" data-toggle="modal" data-target="#createBoardModal" class="host">Host a game</button>
                 <div class="gridTiles">
                     {{#each gameBoard}}
                         <section class="tiles">
                             <p>CreatedBy <b>{{name}}</b></p>
+                            <p>Board Name <b>{{board_name}}</b></p>
                             <p>{{number_of_players}} players joined</p>
                             <button type="button" name="button" id = "btnJoin" onclick="joinGame({{id}})" class="join">Join</button>
                         </section>
@@ -138,5 +144,26 @@
                 </div>
             </section>
         </main>
+        <!-- Create board Modal -->
+      <div class="modal fade" id="createBoardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+              <div class="modal-content">
+                  <div class="modal-header">
+                      <h5 class="modal-title" id="exampleModalLabel">Create Board</h5>
+                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                          <span aria-hidden="true">&times;</span>
+                      </button>
+                  </div>
+                  <div class="modal-body">
+                      <form class="login-input">
+                          <div class="form-group">
+                              <input id="boardName" type="text" class="form-control" placeholder="Board Name" name="boardName" required>
+                          </div>
+                      </form>
+                      <button class="btn login-form__btn submit w-100" type="button" onclick="createGame()" id="createBoardSubmit">Create</button>
+                  </div>
+              </div>
+          </div>
+      </div>
     </body>
 </html>

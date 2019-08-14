@@ -4,7 +4,7 @@
  */
 
 const express = require('express');
-const db = require('../config/db_config.js');
+const db = require('../config/db_config.js').db;
 var path = require('path');
 var fs = require('fs');
 
@@ -115,7 +115,7 @@ var SecondsTohhmmss = function(totalSeconds) {
     var result = (hours < 10 ? "0" + hours : hours);
     result += ":" + (minutes < 10 ? "0" + minutes : minutes);
     result += ":" + (seconds  < 10 ? "0" + seconds : seconds);
-    
+
     return result;
 }
 
