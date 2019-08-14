@@ -56,7 +56,6 @@ io.on('connection', socket => {
   });
 
 socket.on('send_data', (board_id,pawn_data,currPawn) => {
-    debugger;
     const querString = 'UPDATE GAME_MOVES SET moves = (?) WHERE fk_moves_board_id = (?);';
     db.query(querString, [pawn_data,board_id], (err, results) => {
       if (err) {

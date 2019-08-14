@@ -10,7 +10,6 @@ var urlParams = new URLSearchParams(window.location.search);
 var board_id = urlParams.get('board_id');
 var pawnOut = {red:0,blue:0,green:0,yellow:0}
 $(document).ready ( function(){
-  debugger;
   var pawn_data = document.getElementById('pawn_data').value;
   var current_player = document.getElementById('current_player').value;
   if(pawn_data!=""){
@@ -36,7 +35,6 @@ $(document).ready ( function(){
   $('#greenpawn4').css({"top": pawn_data.green_pawn_4[0], "left": pawn_data.green_pawn_4[1]});
 
 }
-debugger;
 
   if(current_player != "")
   {
@@ -80,7 +78,6 @@ function Stuck() {
 }
 
 function changePlayer() {
-  debugger;
     if (num != 6){
         var text = document.getElementById('player');
         switch (text.innerText) {
@@ -291,7 +288,7 @@ function randomNum() {
   if($('#hdnUserName').val() == $('#playerName').text()) // Player will have access only if it's their turn
   {
     if (!clicked) {
-        num = Math.floor((Math.random() * 6) + 1);;
+        num = Math.floor((Math.random() * 6) + 1);
         var dice = document.getElementById('dice');
         dice.style.backgroundImage = "url(Images/" + num + ".jpg)";
         clicked = true;
@@ -439,8 +436,6 @@ function pawn_position(currcolor, storePosition){
 	var green_pawn_2= document.getElementById('greenpawn2').style;
 	var green_pawn_3= document.getElementById('greenpawn3').style;
 	var green_pawn_4= document.getElementById('greenpawn4').style;
-
-  debugger;
 
 	var a =JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left]});
 	var pawn_data = JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left],red_pawn_2:[red_pawn_2.top,red_pawn_2.left],red_pawn_3:[red_pawn_3.top,red_pawn_3.left],red_pawn_4:[red_pawn_4.top,red_pawn_4.left],
