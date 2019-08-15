@@ -81,6 +81,11 @@
             }
         </script>
         <link rel="stylesheet" href="css/master.css">
+        <link href="http://fonts.googleapis.com/css?family=Comfortaa" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="css/chatStyle.css">
+        <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+        <script src="js/chat.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
     </head>
     <body>
         <div id="header"></div>
@@ -134,7 +139,24 @@
                         <div class="entry">{{winPercentage}}</div>
                     {{/each}}
                 </div>
+              <section class="globalChat">
+                <header>
+                  Global chat
+                </header>
+
+
+                <section id="chatroom">
+                  <section id="feedback"></section>
+                </section>
+
+
+                <section id="input_zone">
+                  <input id=username value='{{session.user.name}}' type=hidden>
+                  <input id="message" class="vertical-align" type="text" /><button id="send_message" class="vertical-align" type="button">Send</button>
+
+                </section>
             </section>
+          </section>
             <section id="createGame">
                 <button type="button" name="button" data-toggle="modal" onclick="hostGame()" class="host">Host a game</button>
                 <div class="gridTiles">
