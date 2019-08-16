@@ -7,6 +7,9 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	      <script defer src="http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/socket.io/socket.io.js"></script>
         <script defer src="js/socketScript.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/chatStyle.css">
+        <script src="js/chat.js"></script>
+
         <script>
             var loggedInId = '';
             var loggedInName = '';
@@ -129,7 +132,24 @@
                         <div class="entry">{{point}}</div>
                     {{/each}}
                 </div>
+<section class="globalChat">
+                <header>
+                  Global chat
+                </header>
+
+
+                <section id="chatroom">
+                  <section id="feedback"></section>
+                </section>
+
+
+                <section id="input_zone">
+                  <input id=username value='{{session.user.name}}' type=hidden>
+                  <input id="message" class="vertical-align" type="text" /><button id="send_message" class="vertical-align" type="button">Send</button>
+
+                </section>		
             </section>
+</section>
             <section id="createGame">
                 <button type="button" name="button" data-toggle="modal" data-target="#createBoardModal" class="host">Host a game</button>
                 <div class="gridTiles">
