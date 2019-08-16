@@ -22,7 +22,7 @@ var boards = {};
 
 //Code for creating room and join them
 io.on('connection', socket => {
-  console.log('Connected!');
+  //console.log('Connected!');
 //default username
 	socket.username = "Anonymous" + Math.floor(Math.random() * 100001);
   socket.on('new-player', (board_id, user) => {
@@ -33,10 +33,10 @@ io.on('connection', socket => {
     socket.to(board_id).broadcast.emit('user-connected', user)
   });
   socket.on('send-chat-message', (board_id, user, message) => {
-    console.log("Sending message to board: " + board_id);
-    console.log("Message : " + message);
-    console.log("User obj : " + user.id +" - "+ user.name);
-    console.log("Player : " + boards[board_id].players[user.id]);
+    //console.log("Sending message to board: " + board_id);
+    //console.log("Message : " + message);
+    //console.log("User obj : " + user.id +" - "+ user.name);
+    //console.log("Player : " + boards[board_id].players[user.id]);
     socket.to(board_id).broadcast.emit('chat-message', { message: message, name: boards[board_id].players[user.id].name })
   });
 
@@ -77,7 +77,7 @@ io.on('connection', socket => {
     })
   })
   socket.on('disconnect', (board) => {
-    console.log('user disconnected!!');
+    //console.log('user disconnected!!');
     //socket.to(board).broadcast.emit('user-disconnected', boards[board].players[socket.id])
     //delete boards[board].players[socket.id]
   })
@@ -88,8 +88,8 @@ const router = express.Router();
 
 //route for authentication
 router.get(['/', '/index'], (req, res) => {
-  console.log('--Inside check session--');
-  console.log('req.session : ' + req.session);
+  //console.log('--Inside check session--');
+  //console.log('req.session : ' + req.session);
   const sql = `CALL getLeaderboardData();`;
 
   db.query(sql, (err, result, fields) => {
@@ -113,7 +113,7 @@ router.get('/rules', (req, res) => {
 //route for creating new board
 router.post('/create_board', (req, res) => {
   var user_id = req.session.user.id;
-  console.log('user_id:' + user_id)
+  //console.log('user_id:' + user_id)
   var board_name = req.body.board_name;
   var move_time = 60; //req.body.move_time;
   const queryString = `Call CreateBoard(?, ?, ?, ?, ?, ?, ?);`;
@@ -126,7 +126,7 @@ router.post('/create_board', (req, res) => {
         err
       });
     } else {
-      console.log('Board id = ' + results[0][0]);
+      //console.log('Board id = ' + results[0][0]);
       boards[results[0][0].board_id] = {
         players: {}
       }
@@ -140,9 +140,9 @@ router.post('/create_board', (req, res) => {
 
 //route for joining game
 router.post('/join_board', (req, res) => {
-  console.log('User Id : ' + req.session.user.id);
+  //console.log('User Id : ' + req.session.user.id);
   var board_id = req.body.board_id;
-  console.log('Board : ' + board_id);
+  //console.log('Board : ' + board_id);
   const queryString = `Call JoinBoard(?, ?, ?, ?)`; //"UPDATE BOARDS SET number_of_players = ?, game_status = ? where id = ?";
   var start_end_time = new Date();
 
@@ -155,7 +155,7 @@ router.post('/join_board', (req, res) => {
   var status = number_of_players != 3 ? 'WAITING' : 'RUNNING';
 
   // Check board is exist or NOT, if so, join user in board
-  console.log("Boards : "+ boards[board_id]);
+  //console.log("Boards : "+ boards[board_id]);
   if (!boards[board_id]) {
     res.status(400).json("board not exist").end();
   }
@@ -173,7 +173,7 @@ router.post('/join_board', (req, res) => {
 });
 
 router.get('/leaderBoard', (req, res) => {
-  console.log('leader Board');
+  //console.log('leader Board');
   const sql = `CALL getLeaderboardDetails();`;
 
   db.query(sql, (err, result, fields) => {
@@ -191,7 +191,7 @@ router.get('/gameBoard', (req, res) => {
     const sql = `CALL getBoardMember(?)`;
     db.query(sql, board_id, (error, results) => {
         if (error) {
-            console.log("error0");
+            console.log("ERROR");
             return console.error("error");
         }
         else{

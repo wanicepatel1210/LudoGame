@@ -44,7 +44,7 @@ router.post('/login', (req, res) => {
 
 router.post('/logout', function(req, res) {
     req.session.destroy(function() {
-        console.log("user logged out.")
+        //console.log("user logged out.")
     });
     res.render('index');
 });
@@ -67,7 +67,7 @@ router.post('/register', (req, res) => {
                 if (err) throw err;
                 var gameBoard = result[0];
                 var leaderBoard = result[1];
-                console.log('Register: ' + req.session);
+                //console.log('Register: ' + req.session);
                 res.render('index',{leaderBoard: leaderBoard, gameBoard: gameBoard, session: req.session});
             });
         }
@@ -81,7 +81,7 @@ router.get('/profile', (req,res) => {
 
     db.query(sql, req.session.user.id, (error, results) => {
         if (error) {
-            console.log("error0");
+            console.log("ERROR");
             return console.error("error");
         }
         else {

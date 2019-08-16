@@ -18,7 +18,7 @@ $(function() {
   })
 
   if (username.val()) {
-    console.log(username.val());
+    //console.log(username.val());
     //Emit a username
     socket.emit('change_username', {
       username: username.val()

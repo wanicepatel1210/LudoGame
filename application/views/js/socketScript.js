@@ -27,22 +27,25 @@ if (messageForm != null) {
 function emitJoinNewPlayer(board_id, user) {
   socket.emit('new-player', board_id, user);
 }
-
+/* Board Created */
 socket.on('board-created', board => {
-  console.log('New board created : ' + board);
+  //console.log('New board created : ' + board);
 });
 
+/* Chat */
 socket.on('chat-message', data => {
-  console.log("Chat Message event ");
+  //console.log("Chat Message event ");
   appendMessage(`${data.name}: ${data.message}`)
 })
 
+/* User connected */
 socket.on('user-connected', name => {
-  console.log("User Connected : " + name);
+  //console.log("User Connected : " + name);
 })
 
+/* User Disconnected */
 socket.on('user-disconnected', name => {
-  console.log("User Disconnected : " + name);
+  //console.log("User Disconnected : " + name);
 })
 
 /* Dice Roll brodcasting */
