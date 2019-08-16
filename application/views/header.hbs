@@ -51,22 +51,21 @@
                             $('#loginModal').hide();
                             $('.modal-backdrop').remove();
                             $('#profileName').text(() => {
-                                return "Hi, " + response.name;
+                                 "Hi, " + response.name;
                             });
-                            if(response.name != "") {
-                                window.location.href = "/index"
-                            }
+
                             if($('#hdnFlag').val() == 'true') {
-                                $.ajax({
-                                    url : '/create_board',
-                                    type: 'post',
-                                    success: function(response) {
-					window.location.href = "/gameBoard?board_id="+response.board_id;
-                                    },
-                                    error: function(response) {
-                                        alert("Error on joining game credentials");
-                                    }
-                                });
+                                $('#createBoardModal').modal('show');
+                                // $.ajax({
+                                //     url : '/create_board',
+                                //     type: 'post',
+                                //     success: function(response) {
+					                      //            window.location.href = "/gameBoard?board_id="+response.board_id;
+                                //     },
+                                //     error: function(response) {
+                                //         alert("Error on joining game credentials");
+                                //     }
+                                // });
                             }
                             else if($('#hdnJoinFlag').val() == 'true') {
                                 $.ajax({
@@ -82,6 +81,11 @@
                                         alert("Error on joining game credentials");
                                     }
                                 });
+                            }
+                            else {
+                              if(response.name != "") {
+                                  window.location.href = "/index"
+                              }
                             }
                         },
                         error: function(response) {

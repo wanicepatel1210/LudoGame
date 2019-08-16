@@ -54,10 +54,19 @@
                 }
             }
 
+            function hostGame()
+            {
+              if(loggedInId) {
+                $('#createBoardModal').modal('show');
+              }
+              else {
+                $('#hdnFlag').val(true);
+                $('#loginModal').modal('show');
+              }
+            }
             <!-- Create game board -->
             function createGame() {
               var boardName = $('#boardName').val();
-                if(loggedInId) {
                     $.ajax({
                         url : '/create_board',
                         type: 'post',
@@ -71,11 +80,6 @@
                             alert("Error on joining game credentials");
                         }
                     });
-                }
-                else {
-                    $('#hdnFlag').val(true);
-                    $('#loginModal').modal('show');
-                }
             }
         </script>
         <link rel="stylesheet" href="css/master.css">
@@ -151,11 +155,11 @@
             </section>
 </section>
             <section id="createGame">
-                <button type="button" name="button" data-toggle="modal" data-target="#createBoardModal" class="host">Host a game</button>
+                <button type="button" name="button" data-toggle="modal" onclick="hostGame()" class="host">Host a game</button>
                 <div class="gridTiles">
                     {{#each gameBoard}}
                         <section class="tiles">
-                            <p>CreatedBy <b>{{name}}</b></p>
+                            <p>Created By <b>{{name}}</b></p>
                             <p>Board Name <b>{{board_name}}</b></p>
                             <p>{{number_of_players}} players joined</p>
                             <button type="button" name="button" id = "btnJoin" onclick="joinGame({{id}})" class="join">Join</button>

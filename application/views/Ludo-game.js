@@ -398,7 +398,6 @@ function pawn_position(storePosition){
 	var green_pawn_3= document.getElementById('greenpawn3').style;
 	var green_pawn_4= document.getElementById('greenpawn4').style;
 
-  debugger;
 
 	var a =JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left]});
 	var pawn_data = JSON.stringify({red_pawn_1:[red_pawn_1.top,red_pawn_1.left],red_pawn_2:[red_pawn_2.top,red_pawn_2.left],red_pawn_3:[red_pawn_3.top,red_pawn_3.left],red_pawn_4:[red_pawn_4.top,red_pawn_4.left],
