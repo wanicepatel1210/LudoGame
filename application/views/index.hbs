@@ -1,193 +1,185 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
-    <head>
-        <meta charset="utf-8">
-        <title>Ludo Game - Home</title>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-	      <script defer src="http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/socket.io/socket.io.js"></script>
-        <script defer src="js/socketScript.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/chatStyle.css">
-        <script src="js/chat.js"></script>
-
-        <script>
-            var loggedInId = '';
-            var loggedInName = '';
-            $(document).ready(function() {
-                loggedInId = '{{session.user.id}}';
-                loggedInName = '{{session.user.name}}';
-                $("#header").load("header.hbs", function() {
-                    if(loggedInId) {
-                        $('#btnLogout').show();
-                        $('#btnLogin').hide();
-                        $('#profileName').text('Hi ' + loggedInName);
-                    }
-                    else {
-                        $('#btnLogout').hide();
-                        $('#btnLogin').show();
-                        $('#profileName').text('');
-                    }
-                });
-            });
-
-            <!-- Join game board -->
-            function joinGame(id) {
-                if(loggedInId) {
-                    $.ajax({
-                        url : '/join_board',
-                        type: 'post',
-                        data: {
-                            'board_id' : id
-                        },
-                        success: function(response) {
-                          window.location.href = "/gameBoard?board_id="+response.board_id;
-                        },
-                        error: function(response) {
-                            alert("Error on joining game credentials");
-                        }
-                    });
-                }
-                else {
-                    $('#hdnJoinFlag').val(true);
-                    $('#hdnJoinGameId').val(id);
-                    $('#loginModal').modal('show');
-                }
-            }
-
-            function hostGame()
-            {
+  <head>
+    <meta charset="utf-8">
+    <title>Ludo Game - Home</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <script defer src="http://ec2-18-191-136-71.us-east-2.compute.amazonaws.com/socket.io/socket.io.js"></script>
+    <script defer src="js/socketScript.js"></script>
+    <link rel="stylesheet" type="text/css" href="css/chatStyle.css">
+    <script src="js/chat.js"></script>
+    <script>
+      var loggedInId = '';
+      var loggedInName = '';
+      $(document).ready(function() {
+          loggedInId = '{{session.user.id}}';
+          loggedInName = '{{session.user.name}}';
+          $("#header").load("header.hbs", function() {
               if(loggedInId) {
-                $('#createBoardModal').modal('show');
+                  $('#btnLogout').show();
+                  $('#btnLogin').hide();
+                  $('#profileName').text('Hi ' + loggedInName);
               }
               else {
-                $('#hdnFlag').val(true);
-                $('#loginModal').modal('show');
+                  $('#btnLogout').hide();
+                  $('#btnLogin').show();
+                  $('#profileName').text('');
               }
-            }
-            <!-- Create game board -->
-            function createGame() {
-              var boardName = $('#boardName').val();
-                    $.ajax({
-                        url : '/create_board',
-                        type: 'post',
-                        data: {
-                          board_name: boardName
-                        },
-                        success: function(response) {
-                            window.location.href = "/gameBoard?board_id="+response.board_id;
-                        },
-                        error: function(response) {
-                            alert("Error on joining game credentials");
-                        }
-                    });
-            }
-        </script>
-        <link rel="stylesheet" href="css/master.css">
-    </head>
-    <body>
-        <div id="header"></div>
-        <input type="hidden" id="hdnFlag" value="false">
-        <input type="hidden" id="hdnJoinFlag" value="false">
-        <input type="hidden" id="hdnJoinGameId" value="">
-        <!-- <div class="modal fade bs-example-modal-sm2">
-          <div class="modal-dialog">
-            <div class="modal-content">
-              <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Register to play Ludo</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-              </div>
-              <div class="modal-body">
-                <form class="mt-5 mb-5 login-input">
-
-                    <div class="form-group">
-                      <div class="button-group">
-                        <div style="float:left;margin-top:8px;"><p>Number of Player:</p></div>
-                        <div class="btn-group " style="padding-left:4%;">
-                          <button type="button" class="btn btn-primary" style="margin-right:3%;">2</button>
-                          <button type="button" class="btn btn-primary" style="margin-right:3%;">3</button>
-                          <button type="button" class="btn btn-primary" >4</button>
-                        </div>
-                      </div>
-                    </div>
-                </form>
-              </div>
-              <div class="modal-footer">
-                <button class="btn login-form__btn submit w-100">Play</button>
-                <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button> -->
-              <!--</div>
-            </div><!-- /.modal-content -->
-          <!--</div><!-- /.modal-dialog -->
-        <!--</div><!-- /.modal -->
-
-
-        <main>
-            <section id="leaderBoard">
-                <header>
-                    Leader Board
-                </header>
-                <div class="pointTable">
-                    <div class="entry"><b>Name</b></div>
-                    <div class="entry"><b>Win Percentage</b></div>
-                    {{#each leaderBoard}}
-                        <div class="entry">{{name}}</div>
-                        <div class="entry">{{winPercentage}}</div>
-                    {{/each}}
-                </div>
-<section class="globalChat">
-                <header>
-                  Global chat
-                </header>
-
-
-                <section id="chatroom">
-                  <section id="feedback"></section>
-                </section>
-
-
-                <section id="input_zone">
-                  <input id=username value='{{session.user.name}}' type=hidden>
-                  <input id="message" class="vertical-align" type="text" /><button id="send_message" class="vertical-align" type="button">Send</button>
-
-                </section>		
-            </section>
-</section>
-            <section id="createGame">
-                <button type="button" name="button" data-toggle="modal" onclick="hostGame()" class="host">Host a game</button>
-                <div class="gridTiles">
-                    {{#each gameBoard}}
-                        <section class="tiles">
-                            <p>Created By <b>{{name}}</b></p>
-                            <p>Board Name <b>{{board_name}}</b></p>
-                            <p>{{number_of_players}} players joined</p>
-                            <button type="button" name="button" id = "btnJoin" onclick="joinGame({{id}})" class="join">Join</button>
-                        </section>
-                    {{/each}}
-                </div>
-            </section>
-        </main>
-        <!-- Create board Modal -->
-      <div class="modal fade" id="createBoardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-          <div class="modal-dialog" role="document">
-              <div class="modal-content">
-                  <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Create Board</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                          <span aria-hidden="true">&times;</span>
-                      </button>
-                  </div>
-                  <div class="modal-body">
-                      <form class="login-input">
-                          <div class="form-group">
-                              <input id="boardName" type="text" class="form-control" placeholder="Board Name" name="boardName" required>
-                          </div>
-                      </form>
-                      <button class="btn login-form__btn submit w-100" type="button" onclick="createGame()" id="createBoardSubmit">Create</button>
-                  </div>
-              </div>
+          });
+      });
+      
+      <!-- Join game board -->
+      function joinGame(id) {
+          if(loggedInId) {
+              $.ajax({
+                  url : '/join_board',
+                  type: 'post',
+                  data: {
+                      'board_id' : id
+                  },
+                  success: function(response) {
+                    window.location.href = "/gameBoard?board_id="+response.board_id;
+                  },
+                  error: function(response) {
+                      alert("Error on joining game credentials");
+                  }
+              });
+          }
+          else {
+              $('#hdnJoinFlag').val(true);
+              $('#hdnJoinGameId').val(id);
+              $('#loginModal').modal('show');
+          }
+      }
+      
+      function hostGame()
+      {
+        if(loggedInId) {
+          $('#createBoardModal').modal('show');
+        }
+        else {
+          $('#hdnFlag').val(true);
+          $('#loginModal').modal('show');
+        }
+      }
+      <!-- Create game board -->
+      function createGame() {
+        var boardName = $('#boardName').val();
+              $.ajax({
+                  url : '/create_board',
+                  type: 'post',
+                  data: {
+                    board_name: boardName
+                  },
+                  success: function(response) {
+                      window.location.href = "/gameBoard?board_id="+response.board_id;
+                  },
+                  error: function(response) {
+                      alert("Error on joining game credentials");
+                  }
+              });
+      }
+    </script>
+    <link rel="stylesheet" href="css/master.css">
+  </head>
+  <body>
+    <div id="header"></div>
+    <input type="hidden" id="hdnFlag" value="false">
+    <input type="hidden" id="hdnJoinFlag" value="false">
+    <input type="hidden" id="hdnJoinGameId" value="">
+    <!-- <div class="modal fade bs-example-modal-sm2">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Register to play Ludo</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
           </div>
+          <div class="modal-body">
+            <form class="mt-5 mb-5 login-input">
+      
+                <div class="form-group">
+                  <div class="button-group">
+                    <div style="float:left;margin-top:8px;"><p>Number of Player:</p></div>
+                    <div class="btn-group " style="padding-left:4%;">
+                      <button type="button" class="btn btn-primary" style="margin-right:3%;">2</button>
+                      <button type="button" class="btn btn-primary" style="margin-right:3%;">3</button>
+                      <button type="button" class="btn btn-primary" >4</button>
+                    </div>
+                  </div>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn login-form__btn submit w-100">Play</button>
+            <!-- <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary">Save changes</button> -->
+    <!--</div>
+      </div><!-- /.modal-content -->
+    <!--</div><!-- /.modal-dialog -->
+    <!--</div><!-- /.modal -->
+    <main>
+      <section id="leaderBoard">
+        <header>
+          Leader Board
+        </header>
+        <div class="pointTable">
+          <div class="entry"><b>Name</b></div>
+          <div class="entry"><b>Win Percentage</b></div>
+          {{#each leaderBoard}}
+          <div class="entry">{{name}}</div>
+          <div class="entry">{{winPercentage}}</div>
+          {{/each}}
+        </div>
+        <section class="globalChat">
+          <header>
+            Global chat
+          </header>
+          <section id="chatroom">
+            <section id="feedback"></section>
+          </section>
+          <section id="input_zone">
+            <input id=username value='{{session.user.name}}' type=hidden>
+            <input id="message" class="vertical-align" type="text" /><button id="send_message" class="vertical-align" type="button">Send</button>
+          </section>
+        </section>
+      </section>
+      <section id="createGame">
+        <button type="button" name="button" data-toggle="modal" onclick="hostGame()" class="host">Host a game</button>
+        <div class="gridTiles">
+          {{#each gameBoard}}
+          <section class="tiles">
+            <p>Created By <b>{{name}}</b></p>
+            <p>Board Name <b>{{board_name}}</b></p>
+            <p>{{number_of_players}} players joined</p>
+            <button type="button" name="button" id = "btnJoin" onclick="joinGame({{id}})" class="join">Join</button>
+          </section>
+          {{/each}}
+        </div>
+      </section>
+    </main>
+    <!-- Create board Modal -->
+    <div class="modal fade" id="createBoardModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Create Board</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form class="login-input">
+              <div class="form-group">
+                <input id="boardName" type="text" class="form-control" placeholder="Board Name" name="boardName" required>
+              </div>
+            </form>
+            <button class="btn login-form__btn submit w-100" type="button" onclick="createGame()" id="createBoardSubmit">Create</button>
+          </div>
+        </div>
       </div>
-    </body>
+    </div>
+  </body>
 </html>

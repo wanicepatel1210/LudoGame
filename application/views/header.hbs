@@ -5,12 +5,10 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link rel="stylesheet" href="css/header.css">
-
         <link href="css/style.css" rel="stylesheet">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-
         <title>Header</title>
         <script type = "text/javascript">
             function check_pass() {
@@ -27,7 +25,7 @@
                     document.getElementById('Password2').style.borderColor = "red";
                 }
             }
-
+            
             $(document).ready(function() {
                 $("#cssmenu ul li").removeClass('active');
                 if (document.URL.indexOf('leaderBoard') != -1) {
@@ -53,14 +51,14 @@
                             $('#profileName').text(() => {
                                  "Hi, " + response.name;
                             });
-
+            
                             if($('#hdnFlag').val() == 'true') {
                                 $('#createBoardModal').modal('show');
                                 // $.ajax({
                                 //     url : '/create_board',
                                 //     type: 'post',
                                 //     success: function(response) {
-					                      //            window.location.href = "/gameBoard?board_id="+response.board_id;
+                           //            window.location.href = "/gameBoard?board_id="+response.board_id;
                                 //     },
                                 //     error: function(response) {
                                 //         alert("Error on joining game credentials");
@@ -75,7 +73,7 @@
                                         'board_id' : $('#hdnJoinGameId').val()
                                     },
                                     success: function(response) {
-					window.location.href = "/gameBoard?board_id="+response.board_id;
+            window.location.href = "/gameBoard?board_id="+response.board_id;
                                     },
                                     error: function(response) {
                                         alert("Error on joining game credentials");
@@ -108,7 +106,6 @@
             });
         </script>
     </head>
-
     <body>
         <header class="topnav">
             <div style="display: flex;">
@@ -120,13 +117,12 @@
                 </div>
                 <div style="flex: 1;">
                     <a style="flex: 1;" class="loginNav">
-                        <button class="login" type="button" data-toggle="modal" data-target="#loginModal" id="btnLogin" value="Login">Login</button>
-                        <button class="login" type="button" id="btnLogout" style="display:none;">Logout</button>
+                    <button class="login" type="button" data-toggle="modal" data-target="#loginModal" id="btnLogin" value="Login">Login</button>
+                    <button class="login" type="button" id="btnLogout" style="display:none;">Logout</button>
                     </a>
                 </div>
             </div>
         </header>
-
         <!-- Login Modal -->
         <div class=" modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -134,7 +130,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Login</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -152,7 +148,6 @@
                 </div>
             </div>
         </div>
-
         <!-- SignUp Modal -->
         <div class="modal fade" id="SignUpModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
@@ -160,7 +155,7 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">Register to play Ludo</h5>
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
+                        <span aria-hidden="true">&times;</span>
                         </button>
                     </div>
                     <div class="modal-body">
@@ -183,7 +178,6 @@
                 </div>
             </div>
         </div>
-
         <nav id='cssmenu'>
             <ul class="navMenu">
                 <li id="home" name="home"><a href='/index'>Home</a></li>
@@ -193,4 +187,4 @@
             </ul>
         </nav>
     </body>
-<html>
+    <html>

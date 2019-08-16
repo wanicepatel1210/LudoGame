@@ -25,25 +25,22 @@ router.post('/login', (req, res) => {
             return res.status(400).send({
                 err
             });
-        }
-        else {
+        } else {
             const userDetail = results[0];
             if (!userDetail) {
                 res.status(401).end('unauthenticated');
-            }
-            else if (email == userDetail.email && password == userDetail.password) {
+            } else if (email == userDetail.email && password == userDetail.password) {
                 req.session.user = userDetail;
                 res.status(200).json(userDetail).end();
-            }
-            else {
+            } else {
                 res.status(401).end('unauthenticated');
             }
         }
     })
 })
 
-router.post('/logout', function(req, res) {
-    req.session.destroy(function() {
+router.post('/logout', function (req, res) {
+    req.session.destroy(function () {
         //console.log("user logged out.")
     });
     res.render('index');
@@ -58,24 +55,27 @@ router.post('/register', (req, res) => {
             return res.status(400).send({
                 err
             });
-        }
-        else {
+        } else {
             req.session.user = req.body.Email;
             const sql = `CALL getLeaderboardData();`;
 
-            db.query(sql, (err, result, fields)=> {
+            db.query(sql, (err, result, fields) => {
                 if (err) throw err;
                 var gameBoard = result[0];
                 var leaderBoard = result[1];
                 //console.log('Register: ' + req.session);
-                res.render('index',{leaderBoard: leaderBoard, gameBoard: gameBoard, session: req.session});
+                res.render('index', {
+                    leaderBoard: leaderBoard,
+                    gameBoard: gameBoard,
+                    session: req.session
+                });
             });
         }
     })
 })
 
 //route for profile
-router.get('/profile', (req,res) => {
+router.get('/profile', (req, res) => {
     //call to stored procedure
     const sql = `CALL getProfileData(?)`;
 
@@ -83,8 +83,7 @@ router.get('/profile', (req,res) => {
         if (error) {
             console.log("ERROR");
             return console.error("error");
-        }
-        else {
+        } else {
             var a = results[0];
             res.render('profile', {
                 'email': a[0].email,
@@ -104,8 +103,8 @@ router.get('/profile', (req,res) => {
 })
 
 //Second to HH:MM:SS time format
-var SecondsTohhmmss = function(totalSeconds) {
-    var hours   = Math.floor(totalSeconds / 3600);
+var SecondsTohhmmss = function (totalSeconds) {
+    var hours = Math.floor(totalSeconds / 3600);
     var minutes = Math.floor((totalSeconds - (hours * 3600)) / 60);
     var seconds = totalSeconds - (hours * 3600) - (minutes * 60);
 
@@ -114,14 +113,14 @@ var SecondsTohhmmss = function(totalSeconds) {
 
     var result = (hours < 10 ? "0" + hours : hours);
     result += ":" + (minutes < 10 ? "0" + minutes : minutes);
-    result += ":" + (seconds  < 10 ? "0" + seconds : seconds);
+    result += ":" + (seconds < 10 ? "0" + seconds : seconds);
 
     return result;
 }
 
 //Total Point count from rank
-var Point = function(one,two,three,four){
-    return (one*100)+(two*60)+(three*30)+(four*10);
+var Point = function (one, two, three, four) {
+    return (one * 100) + (two * 60) + (three * 30) + (four * 10);
 }
 
 module.exports = router

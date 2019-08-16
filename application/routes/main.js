@@ -23,8 +23,8 @@ var boards = {};
 //Code for creating room and join them
 io.on('connection', socket => {
   //console.log('Connected!');
-//default username
-	socket.username = "Anonymous" + Math.floor(Math.random() * 100001);
+  //default username
+  socket.username = "Anonymous" + Math.floor(Math.random() * 100001);
   socket.on('new-player', (board_id, user) => {
     console.log("Player " + user.id + " is joining board " + board_id);
     socket.name = user.name;
@@ -37,26 +37,36 @@ io.on('connection', socket => {
     //console.log("Message : " + message);
     //console.log("User obj : " + user.id +" - "+ user.name);
     //console.log("Player : " + boards[board_id].players[user.id]);
-    socket.to(board_id).broadcast.emit('chat-message', { message: message, name: boards[board_id].players[user.id].name })
+    socket.to(board_id).broadcast.emit('chat-message', {
+      message: message,
+      name: boards[board_id].players[user.id].name
+    })
   });
 
-  socket.on('roll_dice', (board_id,num) => {
+  socket.on('roll_dice', (board_id, num) => {
     socket.to(board_id).broadcast.emit('roll-dice', num);
   });
 
-  socket.on('change_player',(board_id, c) => {
+  socket.on('change_player', (board_id, c) => {
     socket.to(board_id).broadcast.emit('change-player', c);
   });
 
-  socket.on('send_data', (board_id,pawn_data,currPawn) => {
-    socket.to(board_id).broadcast.emit('send_data_to_all', {pawn_data:pawn_data, currPawn:currPawn});
+  socket.on('send_data', (board_id, pawn_data, currPawn) => {
+    socket.to(board_id).broadcast.emit('send_data_to_all', {
+      pawn_data: pawn_data,
+      currPawn: currPawn
+    });
   });
 
-  socket.on('notify_player', (board_id,name,color,count) => {
-    socket.to(board_id).broadcast.emit('notify_to_all', {name:name, color:color, count:count});
+  socket.on('notify_player', (board_id, name, color, count) => {
+    socket.to(board_id).broadcast.emit('notify_to_all', {
+      name: name,
+      color: color,
+      count: count
+    });
   });
 
- //listen on change_username
+  //listen on change_username
   socket.on('change_username', (data) => {
     socket.username = data.username
   })
@@ -167,7 +177,9 @@ router.post('/join_board', (req, res) => {
         err
       });
     } else {
-      return res.status(200).json({'board_id' : board_id}).end();
+      return res.status(200).json({
+        'board_id': board_id
+      }).end();
     }
   })
 });
@@ -187,21 +199,20 @@ router.get('/leaderBoard', (req, res) => {
 });
 
 router.get('/gameBoard', (req, res) => {
-    var board_id = req.query.board_id;
-    const sql = `CALL getBoardMember(?)`;
-    db.query(sql, board_id, (error, results) => {
-        if (error) {
-            console.log("ERROR");
-            return console.error("error");
-        }
-        else{
-          res.render('Ludo-game', {
-            players: results[0],
-            board_id: req.query.board_id,
-            session: req.session ? req.session : ''
-    });
-  }
-});
+  var board_id = req.query.board_id;
+  const sql = `CALL getBoardMember(?)`;
+  db.query(sql, board_id, (error, results) => {
+    if (error) {
+      console.log("ERROR");
+      return console.error("error");
+    } else {
+      res.render('Ludo-game', {
+        players: results[0],
+        board_id: req.query.board_id,
+        session: req.session ? req.session : ''
+      });
+    }
+  });
 });
 
 module.exports = router
